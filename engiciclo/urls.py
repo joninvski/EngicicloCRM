@@ -16,4 +16,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
      (r'^admin/', include(admin.site.urls)),
+
+    #static
+    (r'^media2/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/workspace/django/engiciclo/media'}),
 )

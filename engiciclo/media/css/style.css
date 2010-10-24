@@ -1,0 +1,121 @@
+body {
+background-color:white;
+font-size:10pt;
+font-family:Arial;
+margin:0;
+padding:0;
+color:black;
+}
+
+#logo {
+ position:absolute;
+ top:45px;
+ right:50px;
+ background-image:url(../images/logo_efeito.png);
+}
+
+
+#page {
+position:relative;
+width:900px;
+margin:auto;
+padding:auto;
+}
+
+#header {
+clear:both;
+width:840px;
+height:121px;
+background-image:url(../images/header.png);
+padding-top:65px;
+padding-left:60px;
+}
+
+#sidebarnav a {
+	width:200px;
+	display:block;
+	clear:both;
+	padding-left:12px;
+	padding-top:6px;
+	height:25px;
+	border-bottom:2px solid #777777;
+	color:black;
+	text-decoration:none;
+	font-size:14px;
+	font-weight:bold;
+  }
+
+
+#sidebarnav a:hover {
+	text-decoration:none;
+	border-bottom:2px solid #CCCCCC;
+	color:gray;
+}
+
+#sidebarnav a.active {
+	text-decoration:none;
+	border-bottom:2px solid #CCCCCC;
+	color:#CDCDCD;
+	font-size:16px;
+}
+
+#mainarea {
+width:860px;
+clear:both;
+padding-left:30px;
+}
+
+#contentarea {
+width:580px;
+padding-right:30px;
+padding-bottom:20px;
+float:left;
+line-height:14pt;
+}
+
+#sidebar {
+float:left;
+width:215px;
+background-image:url(../images/sidebartop.png);
+background-repeat:no-repeat;
+line-height:14pt;
+}
+
+#footer {
+width:900px;
+clear:both;
+height:68px;
+padding-top:40px;
+text-align:center;
+line-height:14pt;
+background-image:url(../images/footer.png);
+background-repeat:no-repeat;
+background-color:white;
+}
+
+h1 {
+font-size:25pt;
+color:black;
+margin:0;
+}
+
+h2 {
+font-size:15pt;
+color:black;
+padding-top:6px;
+}
+
+.description {
+font-size:14pt;
+color:black;
+margin:0;
+}
+
+a {
+color:gray;
+text-decoration:none;
+}
+
+a:hover {
+text-decoration:underline;
+}
