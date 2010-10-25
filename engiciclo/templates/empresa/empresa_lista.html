@@ -5,9 +5,13 @@
 {% endblock %}
 
 {% block content %}
-
-    {% for competition in all_competitions %}
-        {{ competition }} <a href="/competition/{{ competition.id }}">Detalhes</a> <br/>
+    <table>
+    {% for empresa in empresas_list %}
+    <tr>
+        <td width="150px">{{ empresa }}</td> 
+        <td><a href="/empresas/{{ empresa.id }}">Detalhes</a> <br/></td>
+    </tr>
     {% endfor %}
+    </table>
 
 {% endblock %}

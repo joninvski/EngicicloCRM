@@ -1,13 +1,5 @@
 {% extends "base.html" %}
 
-{% if empresas_list %}
-    <ul>
-    {% for empresa in empresas_list %}
-        <li><a href="/empresas/{{ empresa.id }}/">{{ empresa.question }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Nao existem empresas na lista</p>
-{% endif %}
+Detalhes da empresa individual {{ empresa }}
 
 {% endblock %}
