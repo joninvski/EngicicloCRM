@@ -27,7 +27,7 @@ class ServicoContratado(models.Model):
     tipo_servico_contratado = models.ForeignKey(TipoServicoContratado)
 
     def __unicode__(self):
-        return unicode(self.TipoServicoContratado) + ': ' + unicode(self.empresa)
+        return unicode(self.tipo_servico_contratado) + ': ' + unicode(self.empresa)
 
 class Morada(models.Model):
     empresa = models.ForeignKey(Empresa)
