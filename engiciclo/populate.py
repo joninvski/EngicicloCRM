@@ -8,7 +8,7 @@ import os
 import datetime
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-from crm.models import Empresa, TipoServicoContratado, ServicoContratado, Pessoa, Transportadora
+from crm.models import Empresa, TipoServicoContratado, ServicoContratado, Pessoa, Transportadora, Morada, Contrato, EmpresaMorada
 import crm.models
 
 os.system("python manage.py reset crm --noinput ")
@@ -31,6 +31,31 @@ except Exception as e:
     print str(e) + "Database user not saved"
 
 ################################
+
+################################
+#Moradas
+################################
+morada_a = Morada()
+morada_a.rua_numero_andar = "Rua Carvalho n.3 11Esq"
+morada_a.codigo_postal = "2800"
+morada_a.cidade = "2902"
+morada_a.pais = "Portugal"
+morada_a.save()
+
+morada_b = Morada()
+morada_b.rua_numero_andar = "Rua Manel Jakim n.3 11Esq"
+morada_b.codigo_postal = "2100"
+morada_b.cidade = "2222"
+morada_b.pais = "Portugal"
+morada_b.save()
+
+morada_c = Morada()
+morada_c.rua_numero_andar = "Rua Pedro Esteve n.1 2Esq"
+morada_c.codigo_postal = "2110"
+morada_c.cidade = "2223"
+morada_c.pais = "Portugal"
+morada_c.save()
+
 
 ################################
 #Empresas
@@ -82,6 +107,33 @@ talho_joao.comentario = 'Arranja carros'
 talho_joao.save()
 
 ################################
+#Empresa Morada
+################################
+empresa_morada_a = EmpresaMorada()
+empresa_morada_a.rua_numero_andar = "Rua Carvalho n.3 11Esq"
+empresa_morada_a.codigo_postal = "2800"
+empresa_morada_a.cidade = "Lisboa"
+empresa_morada_a.pais = "Portugal"
+empresa_morada_a.empresa = bosh
+empresa_morada_a.save()
+
+empresa_morada_b = EmpresaMorada()
+empresa_morada_b.rua_numero_andar = "Rua Manel Jakim n.3 11Esq"
+empresa_morada_b.codigo_postal = "2100"
+empresa_morada_b.cidade = "Lisboa"
+empresa_morada_b.pais = "Portugal"
+empresa_morada_b.empresa = talho_joao
+empresa_morada_b.save()
+
+empresa_morada_c = EmpresaMorada()
+empresa_morada_c.rua_numero_andar = "Rua Pedro Esteve n.1 2Esq"
+empresa_morada_c.codigo_postal = "2110"
+empresa_morada_c.cidade = "Lisboa"
+empresa_morada_c.pais = "Portugal"
+empresa_morada_c.empresa = talho_joao
+empresa_morada_c.save()
+
+################################
 #Pessoas
 ################################
 joao = Pessoa()
@@ -117,6 +169,26 @@ afonso.save()
 ################################
 #Tipo de servico contratado
 ################################
+contrato_bosh = Contrato()
+contrato_bosh.numero = 1
+contrato_bosh.data_inicio = datetime.date(1980, 01, 01)
+contrato_bosh.data_fim = datetime.date(1990, 01, 01)
+contrato_bosh.empresa = bosh
+contrato_bosh.save()
+contrato_bosh.moradas.add(empresa_morada_a, empresa_morada_b)
+
+
+contrato_talho = Contrato()
+contrato_talho.numero = 2
+contrato_talho.data_inicio = datetime.date(1980, 01, 01)
+contrato_talho.data_fim = datetime.date(1990, 01, 01)
+contrato_talho.empresa = bosh
+contrato_talho.save()
+contrato_talho.moradas.add(empresa_morada_c)
+
+################################
+#Tipo de servico contratado
+################################
 tipo_servico_sirapa = TipoServicoContratado()
 tipo_servico_sirapa.tipo = "SIRAPA"
 tipo_servico_sirapa.descricao = "Insercao de dados no sistema sirapa"
@@ -146,18 +218,21 @@ tipo_servico_outros.save()
 # Servicos
 ################################
 servico_contratado_bosh = ServicoContratado()
-servico_contratado_bosh.empresa = bosh
-servico_contratado_bosh.morada  = "Rua de baixo"
+servico_contratado_bosh.numero = 1
 servico_contratado_bosh.valor_contratado = 123451
 servico_contratado_bosh.tipo_servico_contratado = tipo_servico_seguranca
+servico_contratado_bosh.contrato = contrato_bosh
 servico_contratado_bosh.save()
+servico_contratado_bosh.morada.add(morada_c)
+servico_contratado_bosh.morada.add(morada_b)
 
 servico_contratado_talho = ServicoContratado()
-servico_contratado_talho.empresa = talho_joao
-servico_contratado_talho.morada  = "Bobadela"
+servico_contratado_talho.numero = 2
 servico_contratado_talho.valor_contratado = 100
+servico_contratado_talho.contrato = contrato_talho
 servico_contratado_talho.tipo_servico_contratado = tipo_servico_residuos
 servico_contratado_talho.save()
+servico_contratado_talho.morada.add(morada_a)
 
 #############################
 #Transportadoras

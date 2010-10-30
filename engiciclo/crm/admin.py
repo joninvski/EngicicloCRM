@@ -1,15 +1,15 @@
-from crm.models import Empresa, Pessoa, Morada, ServicoContratado, Transportadora, Recolha
+from crm.models import Empresa, Pessoa, Morada, ServicoContratado, Transportadora, Recolha, Contrato, EmpresaMorada
 from django.contrib import admin
 
-class MoradaInline(admin.TabularInline):
-    model = Morada 
+class EmpresaMoradaInline(admin.TabularInline):
+    model = EmpresaMorada
 
 class PessoaInline(admin.TabularInline):
     model = Pessoa
     extra = 2
 
-class ServicoContratadoInline(admin.TabularInline):
-    model = ServicoContratado
+class ContratoInline(admin.TabularInline):
+    model = Contrato
     extra = 1
 
 class RecolhaInline(admin.TabularInline):
@@ -21,7 +21,7 @@ class EmpresaAdmin(admin.ModelAdmin):
         (None,         {'fields': ['nome', 'n_entrada', 'n_facturacao', 'cliente']}),
         ('Mais dados', {'fields': ['data_inicio','comentario'], 'classes': ['collapse']}),
     ]
-    inlines = [ServicoContratadoInline, RecolhaInline, MoradaInline, PessoaInline]
+    inlines = [ContratoInline, RecolhaInline, EmpresaMoradaInline, PessoaInline]
     list_display = ('nome',)
 
 admin.site.register(Transportadora)
