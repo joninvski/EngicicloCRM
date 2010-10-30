@@ -49,7 +49,7 @@ class Contrato(models.Model):
     moradas = models.ManyToManyField(EmpresaMorada)
 
     def __unicode__(self):
-        return unicode(self.numero)
+        return unicode(self.numero) + " " + unicode(self.empresa) + " " + unicode(self.data_inicio)
 
 class ServicoContratado(models.Model):
     contrato = models.ForeignKey(Contrato)

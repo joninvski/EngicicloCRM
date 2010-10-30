@@ -24,5 +24,7 @@ class EmpresaAdmin(admin.ModelAdmin):
     inlines = [ContratoInline, RecolhaInline, EmpresaMoradaInline, PessoaInline]
     list_display = ('nome',)
 
+
 admin.site.register(Transportadora)
+admin.site.register(Contrato)
 admin.site.register(Empresa, EmpresaAdmin)
