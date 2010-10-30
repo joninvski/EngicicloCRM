@@ -8,7 +8,10 @@ import os
 import datetime
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-from crm.models import Empresa, TipoServicoContratado, ServicoContratado
+from crm.models import Empresa, TipoServicoContratado, ServicoContratado, Pessoa, Transportadora
+import crm.models
+
+os.system("python manage.py reset crm --noinput ")
 
 ############ ADMIN #############
 try:
@@ -78,6 +81,38 @@ talho_joao.n_facturacao = 123123
 talho_joao.comentario = 'Arranja carros'
 talho_joao.save()
 
+################################
+#Pessoas
+################################
+joao = Pessoa()
+joao.nome = "Joao"
+joao.data_nascimento = datetime.date(1984, 05, 02)
+joao.empresa = talho_joao
+joao.save()
+
+guida = Pessoa()
+guida.nome = "Guida"
+guida.data_nascimento = datetime.date(1983, 03, 04)
+guida.empresa = talho_joao
+guida.save()
+
+joaquim = Pessoa()
+joaquim.nome = "Joaquim"
+joaquim.data_nascimento = datetime.date(1981, 01, 01)
+joaquim.empresa = ferrari
+joaquim.save()
+
+pedro = Pessoa()
+pedro.nome = "Pedro"
+pedro.data_nascimento = datetime.date(1980, 01, 01)
+pedro.empresa = bosh
+pedro.save()
+
+afonso = Pessoa()
+afonso.nome = "Afonso"
+afonso.data_nascimento = datetime.date(1980, 01, 01)
+afonso.empresa = bosh
+afonso.save()
 
 ################################
 #Tipo de servico contratado
@@ -123,3 +158,18 @@ servico_contratado_talho.morada  = "Bobadela"
 servico_contratado_talho.valor_contratado = 100
 servico_contratado_talho.tipo_servico_contratado = tipo_servico_residuos
 servico_contratado_talho.save()
+
+#############################
+#Transportadoras
+#############################
+dhl = Transportadora()
+dhl.nome = "dhl"
+dhl.save()
+
+twa = Transportadora()
+twa.nome = "twa"
+twa.save()
+
+zap = Transportadora()
+zap.nome = "zap"
+zap.save()

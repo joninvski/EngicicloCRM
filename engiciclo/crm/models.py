@@ -17,12 +17,17 @@ class TipoServicoContratado(models.Model):
     tipo = models.CharField('Tipo de Servico contratado', max_length=20)
     descricao = models.CharField('Descricao do tipo de Servico contratado', max_length=200)
 
+    def __unicode__(self):
+        return unicode(self.tipo)
+
 class ServicoContratado(models.Model):
     empresa = models.ForeignKey(Empresa)
     morada = models.CharField(max_length=200)
     valor_contratado = models.FloatField(max_length=200)
     tipo_servico_contratado = models.ForeignKey(TipoServicoContratado)
 
+    def __unicode__(self):
+        return unicode(self.TipoServicoContratado) + ': ' + unicode(self.empresa)
 
 class Morada(models.Model):
     empresa = models.ForeignKey(Empresa)
@@ -65,6 +70,12 @@ class Proposta(models.Model):
     n_trabalhadores = models.IntegerField('Numero de Trabalhadores')
     #TODO
 
+    def __unicode__(self):
+        return unicode(n_proposta)
+
 class TipoProposta(models.Model):
-    tipo = models.CharField('Tipo de proposta',max_length=200)
+    tipo = models.CharField('Tipo de proposta',max_length=20)
     proposta = models.ForeignKey(Proposta)
+
+    def __unicode__(self):
+        return unicode(self.tipo)
