@@ -8,7 +8,7 @@ urlpatterns = patterns('',
     # Example:
 #     (r'^engiciclo/', include('engiciclo.foo.urls')),
      (r'^empresas/$', 'crm.views.index'),
-     (r'^empresas/(?P<empresa_id>\d+)/$', 'crm.views.detail'),
+#     (r'^empresas/(?P<empresa_id>\d+)/$', 'crm.views.detail'),
 
 
     # Uncomment the admin/doc line below to enable admin documentation:

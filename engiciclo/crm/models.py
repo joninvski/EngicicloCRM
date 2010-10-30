@@ -13,18 +13,16 @@ class Empresa(models.Model):
     def __unicode__(self):
         return unicode(self.nome)
 
+class TipoServicoContratado(models.Model):
+    tipo = models.CharField('Tipo de Servico contratado', max_length=20)
+    descricao = models.CharField('Descricao do tipo de Servico contratado', max_length=200)
+
 class ServicoContratado(models.Model):
-    TIPOS_SERVICO = (
-              ('SIR', 'SIRAPA'),
-              ('CON', 'CONSULTADORIA'),
-              ('SEG', 'SEGURANCA'),
-              ('RES', 'RESIDUOS'),
-              ('OUT', 'OUTROS'),
-    )
     empresa = models.ForeignKey(Empresa)
-    tipo_servico = models.CharField(max_length=3, choices=TIPOS_SERVICO)
     morada = models.CharField(max_length=200)
     valor_contratado = models.FloatField(max_length=200)
+    tipo_servico_contratado = models.ForeignKey(TipoServicoContratado)
+
 
 class Morada(models.Model):
     empresa = models.ForeignKey(Empresa)
@@ -59,3 +57,14 @@ class Recolha(models.Model):
 
     def __unicode__(self):
         return unicode(self.data_pedido_recolha)
+
+class Proposta(models.Model):
+    n_proposta = models.IntegerField('Numero da Proposta')
+    n_campanhas = models.IntegerField('Numero de camanhas')
+    n_fontes = models. IntegerField('Numero de Fontes')
+    n_trabalhadores = models.IntegerField('Numero de Trabalhadores')
+    #TODO
+
+class TipoProposta(models.Model):
+    tipo = models.CharField('Tipo de proposta',max_length=200)
+    proposta = models.ForeignKey(Proposta)
