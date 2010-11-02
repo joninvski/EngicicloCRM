@@ -65,6 +65,12 @@ class Pessoa(models.Model):
     empresa = models.ForeignKey(Empresa)
     nome = models.CharField(max_length=200)
     data_nascimento = models.DateField('Data Nascimento', null=True)
+    telefone = models.IntegerField('Telefone', null=True)
+    fax = models.IntegerField('Telefone', null=True)
+    movel = models.IntegerField('Telemovel', null=True)
+    email = models.EmailField('Email', null=True)
+    contacto_principal = models.BooleanField('Contacto Principal')
+
 
     def __unicode__(self):
         return unicode(self.nome)
@@ -85,15 +91,37 @@ class Recolha(models.Model):
     def __unicode__(self):
         return unicode(self.data_pedido_recolha)
 
-class Proposta(models.Model):
-    n_proposta = models.IntegerField('Numero da Proposta')
-    n_campanhas = models.IntegerField('Numero de camanhas', null=True)
-    n_fontes = models. IntegerField('Numero de Fontes', null=True)
-    n_trabalhadores = models.IntegerField('Numero de Trabalhadores', null=True)
-    #TODO
+class Colaborador(models.Model):
+    nome =  models.CharField('Colaborador',max_length=140)
 
     def __unicode__(self):
-        return unicode(self.n_proposta)
+        return unicode(self.nome)
+
+class Proposta(models.Model):
+    n_proposta = models.IntegerField('Numero da Proposta')
+    n_facturacao = models.IntegerField('Numero da Proposta')
+    n_campanha = models.IntegerField('Numero de campanha', null=True)
+    n_fontes = models. IntegerField('Numero de Fontes', null=True)
+    n_trabalhadores = models.IntegerField('Numero de Trabalhadores', null=True)
+    data_abertura = models.DateTimeField('Data Abertura da proposta')
+    data_entrega = models.DateTimeField('Data Entrega da Proposta')
+    empresa = models.ForeignKey('Empresa')
+    contrato = models.ForeignKey('Contrato')
+    moradas = models.ManyToManyField(EmpresaMorada)
+    responsavel = models.ManyToManyField(Colaborador)
+    DECISOES_POSIVEIS = (
+        ('S', 'Sim'),
+        ('N', 'Nao'),
+        ('I', 'Indefinido'),
+        ('A', 'Adiado'),
+    )
+    decisao = models.CharField('Decisao da proposta', max_length=1, choices=DECISOES_POSIVEIS)
+    data_decisao = models.DateField('Data da decisao', null=True)
+
+    valor_proposta = models.FloatField('Valor da proposta')
+
+    def __unicode__(self):
+        return unicode(str(self.n_proposta) + ": " + str(self.empresa))
 
 class TipoProposta(models.Model):
     tipo = models.CharField('Tipo de proposta',max_length=20)
@@ -101,3 +129,12 @@ class TipoProposta(models.Model):
 
     def __unicode__(self):
         return unicode(self.tipo)
+
+class ObservacaoEmpresa(models.Model):
+    texto = models.CharField('Texto da Observacao',max_length=400)
+    data_observacao = models.DateTimeField('Data da Observacao', null=True)
+    empresa = models.ForeignKey(Empresa)
+    colaboradores = models.ManyToManyField(Colaborador, null=True)
+
+    def __unicode__(self):
+        return unicode(self.texto) + ': '  + unicode(self.texto)

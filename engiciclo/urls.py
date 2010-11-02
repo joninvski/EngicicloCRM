@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+from django.views.generic.simple import redirect_to
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -8,6 +9,7 @@ urlpatterns = patterns('',
     # Example:
 #     (r'^engiciclo/', include('engiciclo.foo.urls')),
      (r'^empresas/$', 'crm.views.index'),
+     (r'^crm/$', redirect_to, {'url': '/admin/crm'}),
 #     (r'^empresas/(?P<empresa_id>\d+)/$', 'crm.views.detail'),
 
 

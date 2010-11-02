@@ -8,7 +8,7 @@ import os
 import datetime
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-from crm.models import Empresa, TipoServicoContratado, ServicoContratado, Pessoa, Transportadora, Morada, Contrato, EmpresaMorada
+from crm.models import Empresa, TipoServicoContratado, ServicoContratado, Pessoa, Transportadora, Morada, Contrato, EmpresaMorada, Proposta, Recolha, ObservacaoEmpresa, Colaborador
 import crm.models
 
 os.system("python manage.py reset crm --noinput ")
@@ -63,6 +63,7 @@ morada_c.save()
 
 bosh = Empresa()
 bosh.nome= "Bosh"
+bosh.nif = 1234124
 bosh.data_inicio = datetime.date(2005, 12, 12)
 bosh.cliente = True
 bosh.n_entrada = 32
@@ -72,6 +73,7 @@ bosh.save()
 
 ferrari = Empresa()
 ferrari.nome= "Ferrari"
+ferrari.nif = 234412
 ferrari.data_inicio = datetime.date(2009, 12, 12)
 ferrari.cliente = False 
 ferrari.n_entrada = 10101
@@ -81,6 +83,7 @@ ferrari.save()
 
 porsche = Empresa()
 porsche.nome= "Porshe"
+porsche.nif = 1231414
 porsche.data_inicio = datetime.date(2009, 12, 12)
 porsche.cliente = False 
 porsche.n_entrada = 10101
@@ -90,6 +93,7 @@ porsche.save()
 
 talho_joao = Empresa()
 talho_joao.nome= "Talho do senhor Joao"
+talho_joao.nif = 123124
 talho_joao.data_inicio = datetime.date(2001, 12, 12)
 talho_joao.cliente = False
 talho_joao.n_entrada = 13213
@@ -177,7 +181,6 @@ contrato_bosh.empresa = bosh
 contrato_bosh.save()
 contrato_bosh.moradas.add(empresa_morada_a, empresa_morada_b)
 
-
 contrato_talho = Contrato()
 contrato_talho.numero = 2
 contrato_talho.data_inicio = datetime.date(1980, 01, 01)
@@ -248,3 +251,137 @@ twa.save()
 zap = Transportadora()
 zap.nome = "zap"
 zap.save()
+
+###########################
+# Recolha
+###########################
+recolha_a = Recolha()
+recolha_a.data_pedido_recolha =  datetime.date(2005, 12, 12)
+recolha_a.recolha_efectuada = datetime.date(2010, 12, 12)
+recolha_a.acompanhamento_tecnico = True
+recolha_a.transportadora = zap
+recolha_a.empresa = bosh
+recolha_a.save()
+
+recolha_b = Recolha()
+recolha_b.data_pedido_recolha =  datetime.date(2005, 12, 10)
+recolha_b.recolha_efectuada = datetime.date(2010, 12, 10)
+recolha_b.acompanhamento_tecnico = False
+recolha_b.transportadora = twa
+recolha_b.empresa = ferrari
+recolha_b.save()
+
+recolha_c = Recolha()
+recolha_c.data_pedido_recolha =  datetime.date(2005, 10, 4)
+recolha_c.recolha_efectuada = datetime.date(2010, 12, 6)
+recolha_c.acompanhamento_tecnico = True
+recolha_c.transportadora = twa
+recolha_c.empresa = talho_joao
+recolha_c.save()
+
+recolha_d = Recolha()
+recolha_d.data_pedido_recolha =  datetime.date(2005, 10, 4)
+recolha_d.recolha_efectuada = datetime.date(2010, 12, 6)
+recolha_d.acompanhamento_tecnico = True
+recolha_d.transportadora = twa
+recolha_d.empresa = talho_joao
+recolha_d.save()
+
+##########################3
+# Colaboradores
+##########################3
+joao = Colaborador()
+joao.nome = "Joao Trindade"
+joao.save()
+
+guida = Colaborador()
+guida.nome = "Ana Gomes"
+guida.save()
+
+tiago = Colaborador()
+tiago.nome = "Tiago Santos"
+tiago.save()
+
+jakim = Colaborador()
+jakim.nome = "Joaquim Esteves"
+jakim.save()
+
+peralta = Colaborador()
+peralta.nome = "Peralta Esteves"
+peralta.save()
+
+####################################
+# Proposta
+####################################
+proposta_bosh = Proposta()
+proposta_bosh.n_proposta = 1
+proposta_bosh.n_facturacao = 1
+proposta_bosh.n_campanha = 1
+proposta_bosh.n_fontes = 1
+proposta_bosh.n_trabalhadores = 33
+proposta_bosh.data_abertura =  datetime.date(2005, 12, 11)
+proposta_bosh.data_entrega =  datetime.date(2005, 12, 12)
+proposta_bosh.empresa = bosh
+proposta_bosh.contrato = contrato_bosh
+proposta_bosh.decisao = 'I'
+proposta_bosh.data_decisao = datetime.date(2005, 12, 12)
+proposta_bosh.valor_proposta = 1000
+proposta_bosh.save()
+proposta_bosh.moradas.add(empresa_morada_a, empresa_morada_b)
+proposta_bosh.responsavel.add(peralta)
+
+proposta_talho = Proposta()
+proposta_talho.n_proposta = 2
+proposta_talho.n_facturacao = 1
+proposta_talho.n_campanha = 1
+proposta_talho.n_fontes = 2
+proposta_talho.n_trabalhadores = 2
+proposta_talho.data_abertura =  datetime.date(2001, 1, 10)
+proposta_talho.data_entrega =  datetime.date(2001, 1, 13)
+proposta_talho.empresa = talho_joao
+proposta_talho.contrato = contrato_talho
+proposta_talho.decisao = 'S'
+proposta_talho.data_decisao = datetime.date(2005, 2, 7)
+proposta_talho.valor_proposta = 2000
+proposta_talho.save()
+proposta_talho.responsavel.add(peralta)
+proposta_talho.moradas.add(empresa_morada_c)
+
+##########################3
+# Observacao Empresa
+##########################3
+obs_a = ObservacaoEmpresa()
+obs_a.texto = "Bom pagador"
+obs_a.data_observacao = datetime.date(2010, 12, 6)
+obs_a.empresa = bosh
+obs_a.save()
+obs_a.colaboradores.add(peralta)
+
+
+obs_b = ObservacaoEmpresa()
+obs_b.texto = "Afinal e mau pagador"
+obs_b.data_observacao = datetime.date(2010, 12, 7)
+obs_b.empresa = bosh
+obs_b.save()
+obs_b.colaboradores.add(peralta)
+
+obs_c = ObservacaoEmpresa()
+obs_c.texto = "Somente falando com eles"
+obs_c.data_observacao = datetime.date(2009, 12, 7)
+obs_c.empresa = ferrari
+obs_c.save()
+obs_c.colaboradores.add(tiago)
+
+obs_d = ObservacaoEmpresa()
+obs_d.texto = "Tem mto lixo"
+obs_d.data_observacao = datetime.date(2009, 12, 5)
+obs_d.empresa = talho_joao
+obs_d.save()
+obs_d.colaboradores.add(joao)
+
+obs_e = ObservacaoEmpresa()
+obs_e.texto = "Tem ainda mais lixo"
+obs_e.data_observacao = datetime.date(2009, 12, 6)
+obs_e.empresa = talho_joao
+obs_e.save()
+obs_e.colaboradores.add(joao)
