@@ -97,6 +97,12 @@ class Colaborador(models.Model):
     def __unicode__(self):
         return unicode(self.nome)
 
+class TipoProposta(models.Model):
+    tipo = models.CharField('Tipo de proposta',max_length=20)
+
+    def __unicode__(self):
+        return unicode(self.tipo)
+
 class Proposta(models.Model):
     n_proposta = models.IntegerField('Numero da Proposta')
     n_facturacao = models.IntegerField('Numero da Proposta')
@@ -120,15 +126,10 @@ class Proposta(models.Model):
 
     valor_proposta = models.FloatField('Valor da proposta')
 
+    tipo_proposta = models.ForeignKey(TipoProposta)
+
     def __unicode__(self):
         return unicode(str(self.n_proposta) + ": " + str(self.empresa))
-
-class TipoProposta(models.Model):
-    tipo = models.CharField('Tipo de proposta',max_length=20)
-    proposta = models.ForeignKey(Proposta)
-
-    def __unicode__(self):
-        return unicode(self.tipo)
 
 class ObservacaoEmpresa(models.Model):
     texto = models.CharField('Texto da Observacao',max_length=400)

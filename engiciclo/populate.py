@@ -8,7 +8,7 @@ import os
 import datetime
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-from crm.models import Empresa, TipoServicoContratado, ServicoContratado, Pessoa, Transportadora, Morada, Contrato, EmpresaMorada, Proposta, Recolha, ObservacaoEmpresa, Colaborador
+from crm.models import Empresa, TipoServicoContratado, ServicoContratado, Pessoa, Transportadora, Morada, Contrato, EmpresaMorada, Proposta, Recolha, ObservacaoEmpresa, Colaborador, TipoProposta
 import crm.models
 
 os.system("python manage.py reset crm --noinput ")
@@ -311,6 +311,21 @@ peralta.nome = "Peralta Esteves"
 peralta.save()
 
 ####################################
+# Tipo proposta 
+####################################
+prop_consultadoria = TipoProposta()
+prop_consultadoria.tipo = "Consultadoria"
+prop_consultadoria.save()
+
+prop_equipamento = TipoProposta()
+prop_equipamento.tipo = "Equipamento"
+prop_equipamento.save()
+
+prop_residuos = TipoProposta()
+prop_residuos.tipo = "Residuos"
+prop_residuos.save()
+
+####################################
 # Proposta
 ####################################
 proposta_bosh = Proposta()
@@ -326,6 +341,7 @@ proposta_bosh.contrato = contrato_bosh
 proposta_bosh.decisao = 'I'
 proposta_bosh.data_decisao = datetime.date(2005, 12, 12)
 proposta_bosh.valor_proposta = 1000
+proposta_bosh.tipo_proposta = prop_equipamento
 proposta_bosh.save()
 proposta_bosh.moradas.add(empresa_morada_a, empresa_morada_b)
 proposta_bosh.responsavel.add(peralta)
@@ -343,6 +359,7 @@ proposta_talho.contrato = contrato_talho
 proposta_talho.decisao = 'S'
 proposta_talho.data_decisao = datetime.date(2005, 2, 7)
 proposta_talho.valor_proposta = 2000
+proposta_talho.tipo_proposta = prop_residuos
 proposta_talho.save()
 proposta_talho.responsavel.add(peralta)
 proposta_talho.moradas.add(empresa_morada_c)

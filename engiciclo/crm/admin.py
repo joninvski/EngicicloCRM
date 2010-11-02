@@ -1,4 +1,4 @@
-from crm.models import Empresa, Pessoa, Morada, ServicoContratado, Transportadora, Recolha, Contrato, EmpresaMorada, Proposta, ObservacaoEmpresa, Colaborador
+from crm.models import Empresa, Pessoa, Morada, ServicoContratado, Transportadora, Recolha, Contrato, EmpresaMorada, Proposta, ObservacaoEmpresa, Colaborador, TipoProposta
 from django.contrib import admin
 
 class EmpresaMoradaInline(admin.TabularInline):
@@ -62,13 +62,16 @@ class RecolhaAdmin(admin.ModelAdmin):
 
 class PropostaAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,         {'fields': ['n_proposta', 'n_facturacao', 'n_campanha', 'n_fontes', 'n_trabalhadores', 'data_abertura', 'data_entrega', 'empresa', 'contrato', 'moradas', 'responsavel', 'decisao', 'data_decisao']}),
+        (None,         {'fields': ['n_proposta', 'n_facturacao', 'n_campanha', 'n_fontes', 'n_trabalhadores', 'data_abertura', 'data_entrega', 'empresa', 'contrato', 'moradas', 'responsavel', 'decisao', 'data_decisao', 'tipo_proposta']}),
     ]
-    list_display = ('n_proposta', 'empresa', 'n_campanha', 'n_fontes', 'n_trabalhadores','contrato')
-    list_filter = ('empresa',  'moradas', 'contrato', 'decisao')
+    list_display = ('n_proposta', 'empresa', 'n_campanha', 'n_fontes', 'n_trabalhadores','contrato','tipo_proposta')
+    list_filter = ('empresa',  'moradas', 'contrato', 'decisao','tipo_proposta')
 
-#class TipoProposta(admin.ModelAdmin):
-    #TODO
+class TipoPropostaAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,         {'fields': ['tipo']}),
+    ]
+    list_display = ('tipo',)
 
 admin.site.register(Transportadora)
 admin.site.register(Contrato, ContratoAdmin)
@@ -79,3 +82,4 @@ admin.site.register(Colaborador)
 admin.site.register(EmpresaMorada)
 admin.site.register(Pessoa, PessoaAdmin)
 admin.site.register(Recolha, RecolhaAdmin)
+admin.site.register(TipoProposta, TipoPropostaAdmin)
