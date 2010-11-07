@@ -58,7 +58,7 @@ class ObservacaoEmpresaAdmin(admin.ModelAdmin):
 
 class PessoaAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Dados Base',         {'fields': ['nome', 'empresa', 'data_nascimento']}),
+        ('Dados Base',         {'fields': ['nome', 'empresa', 'data_nascimento', 'email', 'fax','movel', 'contacto_principal']}),
     ]
     list_filter = ('empresa',)
 

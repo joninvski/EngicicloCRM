@@ -1,4 +1,5 @@
-from crm.models import Empresa, Vendedor
+import pdb
+from crm.models import Vendedor, Pessoa, Empresa
 
 def create_empresa(cliente_csv):
     empresa = Empresa()
@@ -11,10 +12,34 @@ def create_empresa(cliente_csv):
     if cliente_csv.valor_contratado:
         empresa.cliente = True
 
+    empresa.save()
     return empresa
 
-def create_vendedor(cliente_csv):
-    vendedor = Vendedor()
-    vendedor.nome =  cliente_csv.vendedor
+def create_vendedor(cliente_csv, empresa):
+
+    try:
+        vendedor = Vendedor.objects.get(nome=cliente_csv.vendedor)
+
+    except Exception:
+        vendedor = Vendedor()
+        vendedor.nome =  cliente_csv.vendedor
+        vendedor.save()
+
+    empresa.vendedores.add(vendedor)
 
     return vendedor
+
+def create_pessoas(cliente_csv, empresa):
+    nomes = cliente_csv.pessoas.replace(' e/ou', ' # ').replace(' e ', ' # ').replace(' ou ', ' # ').replace('/', ' # ')
+    nomes = nomes.split(' # ') 
+
+    lista_pessoas = []
+    for nome in nomes:
+        pessoa = Pessoa()
+        pessoa.nome =  nome
+        pessoa.telefone = cliente_csv.telefone
+        pessoa.contacto_principal = True
+        pessoa.empresa = empresa
+        pessoa.save()
+
+    return lista_pessoas 

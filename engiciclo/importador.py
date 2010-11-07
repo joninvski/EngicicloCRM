@@ -1,8 +1,12 @@
+import pdb
 import csv
 import transformer
 
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+
 class EmpresaCSV():
-    def __init__(self, n_cliente, n_factura, n_estabelecimento, n_contrato, S, V, C, R, renovacao, cliente_berner, data_adesao, vendedor, valor_contratado, nipc, nome_empresa, telefone):
+    def __init__(self, n_cliente, n_factura, n_estabelecimento, n_contrato, S, V, C, R, renovacao, cliente_berner, data_adesao, vendedor, valor_contratado, nipc, nome_empresa, pessoas, telefone):
         self.n_cliente = n_cliente
         self.n_factura = n_factura
         self.n_estabelecimento = n_estabelecimento
@@ -16,15 +20,16 @@ class EmpresaCSV():
         self.data_adesao = data_adesao
         self.vendedor = vendedor
         self.valor_contratado = valor_contratado
-        self.nipc = nipc
+        self.nipc = nipc.replace(' ','')
         self.nome_empresa = nome_empresa
         self.telefone = telefone
+        self.pessoas = pessoas
 
     def __str__(self):
         return str(self.n_cliente)
 
 def create_empresa_CSV(row):
-    print row[17]
+    print row[16]
     return EmpresaCSV(\
                      n_cliente           =   row[0],\
                      n_factura           =   row[1],\
@@ -41,6 +46,7 @@ def create_empresa_CSV(row):
                      valor_contratado    =   row[13],\
                      nipc                =   row[14],\
                      nome_empresa        =   row[15],\
+                     pessoas             =   row[16],\
                      telefone            =   row[17]\
                      )
 
@@ -65,15 +71,15 @@ def skip_first_cliente_lines(clientes_reader):
         if first_row <= 0:
             return
 
-
 def main():
     clientes_reader = get_clientes_csv_reader('clientes.csv')
     skip_first_cliente_lines(clientes_reader)
     clientes_csv = create_clientes_csv(clientes_reader)
 
-    for c in clientes_csv: 
-        transformer.create_empresa(c)
-        transformer.create_vendedor(c)
+    for c in clientes_csv:
+        empresa = transformer.create_empresa(c)
+        vendedor = transformer.create_vendedor(c, empresa)
+        transformer.create_pessoas(c, empresa)
 
 if __name__ == '__main__':
     main()

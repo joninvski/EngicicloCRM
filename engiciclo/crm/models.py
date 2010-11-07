@@ -74,11 +74,11 @@ class Pessoa(models.Model):
     empresa = models.ForeignKey(Empresa)
     nome = models.CharField(max_length=200)
     data_nascimento = models.DateField('Data Nascimento', null=True)
-    telefone = models.IntegerField('Telefone', null=True)
-    fax = models.IntegerField('Telefone', null=True)
+    telefone = models.CharField('Telefone', max_length=12)
+    fax = models.IntegerField('Fax', null=True)
     movel = models.IntegerField('Telemovel', null=True)
     email = models.EmailField('Email', null=True)
-    contacto_principal = models.BooleanField('Contacto Principal')
+    contacto_principal = models.BooleanField('Contacto principal da empresa')
 
 
     def __unicode__(self):
@@ -139,7 +139,6 @@ class Proposta(models.Model):
 
     def __unicode__(self):
         return unicode(str(self.n_proposta) + ": " + str(self.empresa))
-
 
 class ObservacaoEmpresa(models.Model):
     texto = models.TextField('Texto da Observacao',max_length=400)
