@@ -1,6 +1,6 @@
 from crm.models import Empresa, Pessoa, Morada, ServicoContratado, Transportadora
 from crm.models import Recolha, Contrato, EmpresaMorada, Proposta, ObservacaoEmpresa
-from crm.models import Colaborador, TipoProposta, TipoServicoContratado
+from crm.models import Colaborador, TipoProposta, TipoServicoContratado, Vendedor
 from django.contrib import admin
 
 class EmpresaMoradaInline(admin.TabularInline):
@@ -30,10 +30,13 @@ class ColaboradorInline(admin.TabularInline):
     model = Colaborador
     extra = 3
 
+class VendedorInline(admin.TabularInline):
+    model = Vendedor
+
 class EmpresaAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,         {'fields': ['nome', 'n_entrada', 'n_facturacao', 'cliente']}),
-        ('Mais dados', {'fields': ['data_inicio','comentario'], 'classes': ['collapse']}),
+        (None,         {'fields': ['nome', 'n_entrada', 'n_facturacao', 'cliente', 'vendedores']}),
+        ('Mais dados', {'fields': ['data_inicio','comentario','cliente_berner'], 'classes': ['collapse']}),
     ]
     inlines = [ContratoInline, ObservacaoEmpresaInline, RecolhaInline, EmpresaMoradaInline, PessoaInline, ComentarioInline]
     list_display = ('nome','nif','data_inicio')
@@ -91,3 +94,4 @@ admin.site.register(Recolha, RecolhaAdmin)
 admin.site.register(TipoProposta, TipoPropostaAdmin)
 admin.site.register(ServicoContratado)
 admin.site.register(TipoServicoContratado)
+admin.site.register(Vendedor)

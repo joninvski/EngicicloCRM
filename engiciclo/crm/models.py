@@ -2,6 +2,12 @@ from django.db import models
 
 # Create your models here.
 
+class Vendedor(models.Model):
+    nome = models.CharField('Nome do Vendedor', max_length=120)
+
+    def __unicode__(self):
+        return unicode(self.nome)
+
 class Morada(models.Model):
     rua_numero_andar = models.CharField(max_length=200)
     codigo_postal = models.CharField(max_length=20)
@@ -29,7 +35,10 @@ class Empresa(models.Model):
 
     n_entrada = models.IntegerField('Numero de Entrada', null=True)
     n_facturacao = models.IntegerField('Numero de facturacao', null=True)
-    comentario = models.CharField(max_length=1000)
+    comentario = models.TextField(max_length=1000)
+
+    cliente_berner = models.CharField(max_length=50)
+    vendedores = models.ManyToManyField(Vendedor, null=True)
 
     def __unicode__(self):
         return unicode(self.nome)
@@ -130,6 +139,7 @@ class Proposta(models.Model):
 
     def __unicode__(self):
         return unicode(str(self.n_proposta) + ": " + str(self.empresa))
+
 
 class ObservacaoEmpresa(models.Model):
     texto = models.TextField('Texto da Observacao',max_length=400)
