@@ -36,7 +36,7 @@ class Empresa(models.Model):
 
 class TipoServicoContratado(models.Model):
     tipo = models.CharField('Tipo de Servico contratado', max_length=20)
-    descricao = models.CharField('Descricao do tipo de Servico contratado', blank=True, max_length=200)
+    descricao = models.TextField('Descricao do tipo de Servico contratado', blank=True, max_length=200)
 
     def __unicode__(self):
         return unicode(self.tipo)
@@ -132,7 +132,7 @@ class Proposta(models.Model):
         return unicode(str(self.n_proposta) + ": " + str(self.empresa))
 
 class ObservacaoEmpresa(models.Model):
-    texto = models.CharField('Texto da Observacao',max_length=400)
+    texto = models.TextField('Texto da Observacao',max_length=400)
     data_observacao = models.DateTimeField('Data da Observacao', null=True)
     empresa = models.ForeignKey(Empresa)
     colaboradores = models.ManyToManyField(Colaborador, null=True)

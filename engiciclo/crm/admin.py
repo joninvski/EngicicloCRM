@@ -1,4 +1,6 @@
-from crm.models import Empresa, Pessoa, Morada, ServicoContratado, Transportadora, Recolha, Contrato, EmpresaMorada, Proposta, ObservacaoEmpresa, Colaborador, TipoProposta
+from crm.models import Empresa, Pessoa, Morada, ServicoContratado, Transportadora
+from crm.models import Recolha, Contrato, EmpresaMorada, Proposta, ObservacaoEmpresa
+from crm.models import Colaborador, TipoProposta, TipoServicoContratado
 from django.contrib import admin
 
 class EmpresaMoradaInline(admin.TabularInline):
@@ -7,6 +9,10 @@ class EmpresaMoradaInline(admin.TabularInline):
 class PessoaInline(admin.TabularInline):
     model = Pessoa
     extra = 2
+
+class ComentarioInline(admin.TabularInline):
+    model = Contrato
+    extra = 1
 
 class ContratoInline(admin.TabularInline):
     model = Contrato
@@ -17,7 +23,7 @@ class RecolhaInline(admin.TabularInline):
     extra = 1
 
 class ObservacaoEmpresaInline(admin.TabularInline):
-    model = ObservacaoEmpresa 
+    model = ObservacaoEmpresa
     extra = 1
 
 class ColaboradorInline(admin.TabularInline):
@@ -29,7 +35,7 @@ class EmpresaAdmin(admin.ModelAdmin):
         (None,         {'fields': ['nome', 'n_entrada', 'n_facturacao', 'cliente']}),
         ('Mais dados', {'fields': ['data_inicio','comentario'], 'classes': ['collapse']}),
     ]
-    inlines = [ContratoInline, RecolhaInline, EmpresaMoradaInline, PessoaInline]
+    inlines = [ContratoInline, ObservacaoEmpresaInline, RecolhaInline, EmpresaMoradaInline, PessoaInline, ComentarioInline]
     list_display = ('nome','nif','data_inicio')
 
 class ContratoAdmin(admin.ModelAdmin):
@@ -37,7 +43,7 @@ class ContratoAdmin(admin.ModelAdmin):
         (None,         {'fields': ['numero', 'data_inicio', 'data_fim']}),
     ]
     list_display = ('numero','data_inicio', 'data_fim')
-    list_filter = ('empresa', ) 
+    list_filter = ('empresa', )
 
 class ObservacaoEmpresaAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -83,3 +89,5 @@ admin.site.register(EmpresaMorada)
 admin.site.register(Pessoa, PessoaAdmin)
 admin.site.register(Recolha, RecolhaAdmin)
 admin.site.register(TipoProposta, TipoPropostaAdmin)
+admin.site.register(ServicoContratado)
+admin.site.register(TipoServicoContratado)
