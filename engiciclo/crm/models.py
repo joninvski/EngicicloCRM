@@ -18,14 +18,16 @@ class Morada(models.Model):
         return unicode(self.rua_numero_andar)
 
 class EmpresaMorada(models.Model):
-    rua_numero_andar = models.CharField(max_length=200)
+    rua = models.CharField('Rua numero e andar', max_length=200)
+    localidade = models.CharField(max_length=40)
     codigo_postal = models.CharField(max_length=20)
-    cidade = models.CharField(max_length=20)
+    concelho = models.CharField(max_length=40)
+    distrito = models.CharField(max_length=40)
     pais = models.CharField(max_length=20, default='Portugal')
     empresa = models.ForeignKey('Empresa')
 
     def __unicode__(self):
-        return unicode(self.rua_numero_andar)
+        return unicode(self.rua) + unicode(self.localidade)
 
 class Empresa(models.Model):
     nome = models.CharField('Nome da Empresa', max_length=200)
@@ -75,8 +77,8 @@ class Pessoa(models.Model):
     nome = models.CharField(max_length=200)
     data_nascimento = models.DateField('Data Nascimento', null=True)
     telefone = models.CharField('Telefone', max_length=12)
-    fax = models.IntegerField('Fax', null=True)
-    movel = models.IntegerField('Telemovel', null=True)
+    fax = models.CharField('Fax', max_length=12)
+    movel = models.CharField('Telemovel', max_length=12)
     email = models.EmailField('Email', null=True)
     contacto_principal = models.BooleanField('Contacto principal da empresa')
 
@@ -114,8 +116,8 @@ class TipoProposta(models.Model):
 
 class Proposta(models.Model):
     n_proposta = models.IntegerField('Numero da Proposta')
-    n_facturacao = models.IntegerField('Numero da Proposta')
-    n_campanha = models.IntegerField('Numero de campanha', null=True)
+    n_facturacao = models.IntegerField('Numero de Facturacao')
+    n_campanha = models.IntegerField('Numero de Campanha', null=True)
     n_fontes = models. IntegerField('Numero de Fontes', null=True)
     n_trabalhadores = models.IntegerField('Numero de Trabalhadores', null=True)
     data_abertura = models.DateTimeField('Data Abertura da proposta')

@@ -1,8 +1,9 @@
 import pdb
-from crm.models import Vendedor, Pessoa, Empresa
+from crm.models import Vendedor, Pessoa, Empresa, EmpresaMorada
 
 def create_empresa(cliente_csv):
     empresa = Empresa()
+    empresa.n_entrada = cliente_csv.n_cliente
     empresa.nome = cliente_csv.nome_empresa
     empresa.nif = cliente_csv.nipc
     empresa.data_adesao = cliente_csv.data_adesao
@@ -30,7 +31,7 @@ def create_vendedor(cliente_csv, empresa):
     return vendedor
 
 def create_pessoas(cliente_csv, empresa):
-    nomes = cliente_csv.pessoas.replace(' e/ou', ' # ').replace(' e ', ' # ').replace(' ou ', ' # ').replace('/', ' # ')
+    nomes = cliente_csv.pessoas.replace(' e/ou  ', ' # ').replace(' e ', ' # ').replace(' ou ', ' # ').replace('/', ' # ')
     nomes = nomes.split(' # ') 
 
     lista_pessoas = []
@@ -38,8 +39,20 @@ def create_pessoas(cliente_csv, empresa):
         pessoa = Pessoa()
         pessoa.nome =  nome
         pessoa.telefone = cliente_csv.telefone
+        pessoa.fax = cliente_csv.fax
+        pessoa.movel = cliente_csv.movel
+        pessoa.email = cliente_csv.email
         pessoa.contacto_principal = True
         pessoa.empresa = empresa
         pessoa.save()
 
     return lista_pessoas 
+
+def create_moradas(cliente_csv, empresa):
+    empresaMorada = EmpresaMorada()
+    empresaMorada.rua = cliente_csv.instalacoes
+    empresaMorada.localidade =  cliente_csv.localidade
+    empresaMorada.cod_postal = cliente_csv.cod_postal
+    empresaMorada.concelho = cliente_csv.concelho
+    empresaMorada.empresa = empresa
+    empresaMorada.save()
