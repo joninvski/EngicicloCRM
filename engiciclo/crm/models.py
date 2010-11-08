@@ -27,7 +27,7 @@ class EmpresaMorada(models.Model):
     empresa = models.ForeignKey('Empresa')
 
     def __unicode__(self):
-        return unicode(self.rua) + unicode(self.localidade)
+        return unicode(self.rua) + ', ' + unicode(self.localidade)
 
 class Empresa(models.Model):
     nome = models.CharField('Nome da Empresa', max_length=200)
