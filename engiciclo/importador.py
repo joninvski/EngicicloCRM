@@ -6,7 +6,7 @@ import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
 class EmpresaCSV():
-    def __init__(self, n_cliente, n_factura, n_estabelecimento, n_contrato, S, V, C, R, renovacao, cliente_berner, data_adesao, vendedor, valor_contratado, nipc, nome_empresa, pessoas, telefone, fax, movel, email, instalacoes, localidade, cod_postal, concelho, distrito, instalacoes_facturacao, localidade_facturacao, cod_postal_facturacao, concelho_facturacao, distrito_facturacao):
+    def __init__(self, n_cliente, n_factura, n_estabelecimento, n_contrato, S, V, C, R, cliente_berner, data_adesao, vendedor, valor_contratado, nipc, nome_empresa, pessoas, telefone, fax, movel, email, instalacoes, localidade, cod_postal, concelho, distrito, instalacoes_facturacao, localidade_facturacao, cod_postal_facturacao, concelho_facturacao, distrito_facturacao):
         self.n_cliente = n_cliente
         self.n_factura = n_factura
         self.n_estabelecimento = n_estabelecimento
@@ -15,7 +15,6 @@ class EmpresaCSV():
         self.V = V
         self.C = C
         self.R = R
-        self.renovacao = renovacao
         self.cliente_berner = cliente_berner
         self.data_adesao = data_adesao
         self.vendedor = vendedor
@@ -46,13 +45,12 @@ def create_empresa_CSV(row):
                      n_cliente           =   row[0],\
                      n_factura           =   row[1],\
                      n_estabelecimento   =   row[1],\
-                     n_contrato          =   row[2],\
-                     S                   =   row[3],\
-                     V                   =   row[4],\
-                     C                   =   row[5],\
-                     R                   =   row[6],\
-                     renovacao           =   row[7],\
-                     cliente_berner      =   row[9],\
+                     n_contrato          =   row[3],\
+                     S                   =   row[4],\
+                     V                   =   row[5],\
+                     C                   =   row[6],\
+                     R                   =   row[7],\
+                     cliente_berner      =   row[8],\
                      data_adesao         =   row[9],\
                      vendedor            =   row[10],\
                      valor_contratado    =   row[11],\
@@ -76,6 +74,9 @@ def create_empresa_CSV(row):
                      )
 
 def create_clientes_csv(clientes_reader):
+    """
+    Create the cvs data related with the clientes file
+    """
     lista_empresas = []
     for row in clientes_reader:
         if not row[0]: break
@@ -106,6 +107,7 @@ def main():
         vendedor = transformer.create_vendedor(c, empresa)
         pessoas = transformer.create_pessoas(c, empresa)
         moradas = transformer.create_moradas(c, empresa)
+        contrato = transformer.create_contrato(c, empresa)
 
 if __name__ == '__main__':
     main()
