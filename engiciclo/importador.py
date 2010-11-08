@@ -42,7 +42,6 @@ class EmpresaCSV():
         return str(self.n_cliente)
 
 def create_empresa_CSV(row):
-    print row[17]
     return EmpresaCSV(\
                      n_cliente           =   row[0],\
                      n_factura           =   row[1],\
@@ -55,25 +54,25 @@ def create_empresa_CSV(row):
                      renovacao           =   row[7],\
                      cliente_berner      =   row[9],\
                      data_adesao         =   row[9],\
-                     vendedor            =   row[12],\
-                     valor_contratado    =   row[13],\
-                     nipc                =   row[14],\
-                     nome_empresa        =   row[15],\
-                     pessoas             =   row[16],\
-                     telefone            =   row[17],\
-                     fax                 =   row[18],\
-                     movel               =   row[19],\
-                     email               =   row[20],\
-                     instalacoes         =   row[22],\
-                     localidade          =   row[23],\
-                     cod_postal          =   row[24],\
-                     concelho            =   row[25],\
-                     distrito            =   row[26],\
-                     instalacoes_facturacao        =   row[27],\
-                     localidade_facturacao         =   row[28],\
-                     cod_postal_facturacao         =   row[29],\
-                     concelho_facturacao           =   row[30],\
-                     distrito_facturacao           =   row[31]\
+                     vendedor            =   row[10],\
+                     valor_contratado    =   row[11],\
+                     nipc                =   row[13],\
+                     nome_empresa        =   row[14],\
+                     pessoas             =   row[15],\
+                     telefone            =   row[16],\
+                     fax                 =   row[17],\
+                     movel               =   row[18],\
+                     email               =   row[19],\
+                     instalacoes         =   row[21],\
+                     localidade          =   row[22],\
+                     cod_postal          =   row[23],\
+                     concelho            =   row[24],\
+                     distrito            =   row[25],\
+                     instalacoes_facturacao        =   row[26],\
+                     localidade_facturacao         =   row[27],\
+                     cod_postal_facturacao         =   row[28],\
+                     concelho_facturacao           =   row[29],\
+                     distrito_facturacao           =   row[30]\
                      )
 
 def create_clientes_csv(clientes_reader):
