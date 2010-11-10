@@ -7,7 +7,7 @@ def create_empresa(cliente_csv):
     empresa.n_entrada = cliente_csv.n_cliente
     empresa.nome = cliente_csv.nome_empresa
     empresa.nif = cliente_csv.nipc
-    empresa.data_adesao = cliente_csv.data_adesao
+    empresa.data_inicio = datetime.datetime.strptime(cliente_csv.data_adesao, '%d/%m/%y')
     empresa.n_facturacao = cliente_csv.n_factura
     empresa.cliente_berner = cliente_csv.cliente_berner
 
