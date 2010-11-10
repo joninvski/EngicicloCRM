@@ -42,6 +42,7 @@ class EmpresaAdmin(admin.ModelAdmin):
     list_display = ('n_entrada', 'nome','nif','data_inicio')
     list_per_page = 300
     search_fields = ['nome','nif']
+    date_hierarchy = 'data_inicio'
 
 class ContratoAdmin(admin.ModelAdmin):
     fieldsets = [
