@@ -43,9 +43,9 @@ class EmpresaAdmin(admin.ModelAdmin):
 
 class ContratoAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,         {'fields': ['numero', 'data_inicio', 'data_fim']}),
+        (None,         {'fields': ['numero', 'data_inicio', 'data_fim', 'empresa', 'moradas']}),
     ]
-    list_display = ('numero','data_inicio', 'data_fim')
+    list_display = ('numero','data_inicio', 'data_fim', 'empresa')
     list_filter = ('empresa', )
 
 class ObservacaoEmpresaAdmin(admin.ModelAdmin):
