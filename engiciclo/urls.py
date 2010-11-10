@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     # Example:
 #     (r'^engiciclo/', include('engiciclo.foo.urls')),
      (r'^empresas/$', 'crm.views.index'),
+     (r'^$', redirect_to, {'url': '/admin/crm'}),
+     (r'^/$', redirect_to, {'url': '/admin/crm'}),
      (r'^crm/$', redirect_to, {'url': '/admin/crm'}),
 #     (r'^empresas/(?P<empresa_id>\d+)/$', 'crm.views.detail'),
 
@@ -20,5 +22,5 @@ urlpatterns = patterns('',
      (r'^admin/', include(admin.site.urls)),
 
     #static
-    (r'^media2/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/workspace/django/engiciclo/media'}),
+    (r'^media2/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/ana/django/engiciclo/media'}),
 )
