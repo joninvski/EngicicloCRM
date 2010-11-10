@@ -40,6 +40,8 @@ class EmpresaAdmin(admin.ModelAdmin):
     ]
     inlines = [ContratoInline, ObservacaoEmpresaInline, RecolhaInline, EmpresaMoradaInline, PessoaInline, ComentarioInline]
     list_display = ('n_entrada', 'nome','nif','data_inicio')
+    list_per_page = 300
+    search_fields = ['nome','nif']
 
 class ContratoAdmin(admin.ModelAdmin):
     fieldsets = [
