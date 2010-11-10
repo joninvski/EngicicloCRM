@@ -53,7 +53,7 @@ class TipoServicoContratado(models.Model):
         return unicode(self.tipo)
 
 class Contrato(models.Model):
-    numero = models.IntegerField('Numero do contrato')
+    numero = models.CharField('Numero do contrato', max_length=20)
     data_inicio = models.DateField('Data inicio do contrato', null=True)
     data_fim = models.DateField('Data fim do Contrato', null=True)
     empresa = models.ForeignKey('Empresa')

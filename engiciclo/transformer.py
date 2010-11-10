@@ -62,8 +62,7 @@ def create_contrato(cliente_csv, empresa):
     if(cliente_csv.n_contrato):
         contrato = Contrato()
         contrato.numero = cliente_csv.n_contrato
-        print cliente_csv.data_adesao
-        contrato.data_inicio = datetime.strptime(cliente_csv.data_adesao, '')
+        contrato.data_inicio = datetime.datetime.strptime(cliente_csv.data_adesao, '%d/%m/%y')
         one_year = datetime.timedelta(weeks=40, days=84, hours=23, minutes=50, seconds=600)
         contrato.data_fim = contrato.data_inicio + one_year
         contrato.empresa = empresa
