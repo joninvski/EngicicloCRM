@@ -39,7 +39,7 @@ class EmpresaAdmin(admin.ModelAdmin):
         ('Mais dados', {'fields': ['data_inicio','comentario','cliente_berner'], 'classes': ['collapse']}),
     ]
     inlines = [ContratoInline, ObservacaoEmpresaInline, RecolhaInline, EmpresaMoradaInline, PessoaInline, ComentarioInline]
-    list_display = ('nome','nif','data_inicio')
+    list_display = ('n_entrada', 'nome','nif','data_inicio')
 
 class ContratoAdmin(admin.ModelAdmin):
     fieldsets = [
