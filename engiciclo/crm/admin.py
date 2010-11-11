@@ -35,10 +35,11 @@ class VendedorInline(admin.TabularInline):
 
 class EmpresaAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,         {'fields': ['nome', 'n_entrada', 'n_facturacao', 'cliente', 'vendedores']}),
+        (None,         {'fields': ['nome', 'n_entrada', 'n_facturacao', 'cliente', 'vendedores', 'moradas']}),
         ('Mais dados', {'fields': ['data_inicio','comentario','cliente_berner'], 'classes': ['collapse']}),
     ]
-    inlines = [ContratoInline, ObservacaoEmpresaInline, RecolhaInline, EmpresaMoradaInline, PessoaInline, ComentarioInline]
+    filter_horizontal = ('moradas',)
+    inlines = [ObservacaoEmpresaInline, ContratoInline, RecolhaInline, PessoaInline]
     list_display = ('n_entrada', 'nome','nif','data_inicio')
     list_per_page = 300
     search_fields = ['nome','nif']

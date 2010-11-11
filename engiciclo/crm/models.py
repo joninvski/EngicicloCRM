@@ -24,7 +24,6 @@ class EmpresaMorada(models.Model):
     concelho = models.CharField(max_length=40)
     distrito = models.CharField(max_length=40)
     pais = models.CharField(max_length=20, default='Portugal')
-    empresa = models.ForeignKey('Empresa')
 
     def __unicode__(self):
         return unicode(self.rua) + ', ' + unicode(self.localidade)
@@ -37,10 +36,11 @@ class Empresa(models.Model):
 
     n_entrada = models.IntegerField('Numero de Entrada', null=True)
     n_facturacao = models.IntegerField('Numero de facturacao', null=True)
-    comentario = models.TextField(max_length=1000)
+    comentario = models.TextField('Comentario Geral', max_length=1000)
 
     cliente_berner = models.CharField(max_length=50)
     vendedores = models.ManyToManyField(Vendedor, null=True)
+    moradas = models.ManyToManyField(EmpresaMorada)
 
     def __unicode__(self):
         return unicode(self.nome)
@@ -70,7 +70,6 @@ class ServicoContratado(models.Model):
 
     def __unicode__(self):
         return unicode(self.tipo_servico_contratado)
-
 
 class Pessoa(models.Model):
     empresa = models.ForeignKey(Empresa)
