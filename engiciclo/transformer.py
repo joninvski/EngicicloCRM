@@ -32,7 +32,7 @@ def create_vendedor(cliente_csv, empresa):
     return vendedor
 
 def create_pessoas(cliente_csv, empresa):
-    nomes = cliente_csv.pessoas.replace(' e/ou  ', ' # ').replace(' e ', ' # ').replace(' ou ', ' # ').replace('/', ' # ')
+    nomes = cliente_csv.pessoas.replace(' e/ou ', ' # ').replace(' e ', ' # ').replace(' ou ', ' # ').replace('/', ' # ')
     nomes = nomes.split(' # ') 
 
     lista_pessoas = []
