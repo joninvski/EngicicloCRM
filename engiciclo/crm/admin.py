@@ -3,12 +3,18 @@ from crm.models import Recolha, Contrato, EmpresaMorada, Proposta, ObservacaoEmp
 from crm.models import Colaborador, TipoProposta, TipoServicoContratado, Vendedor
 from django.contrib import admin
 from django import forms
+from django.forms import ModelMultipleChoiceField
 
 class MyEmpresaAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MyEmpresaAdminForm, self).__init__(*args, **kwargs)
         if not 'initial' in kwargs:
-            self.fields['moradas'].queryset = kwargs['instance'].moradas
+            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=kwargs['instance'].moradas)
+        else:
+            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=Empresa.objects.all(), initial=kwargs['instance'].moradas, widget=forms.CheckboxSelectMultiple())
+
+#para o contrato e isto
+#            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=Empresa.objects.all()[180:190], initial=kwargs['instance'].moradas, widget=forms.CheckboxSelectMultiple())
 
     class Meta:
         model = Empresa
@@ -56,6 +62,7 @@ class EmpresaAdmin(admin.ModelAdmin):
     search_fields = ['nome','nif']
     date_hierarchy = 'data_inicio'
     save_on_top = True
+    filter_horizontal = ('moradas',)
 
 class ContratoAdmin(admin.ModelAdmin):
     fieldsets = [
