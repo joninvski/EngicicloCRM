@@ -5,13 +5,27 @@ from django.contrib import admin
 from django import forms
 from django.forms import ModelMultipleChoiceField
 
+class MyContratoAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(MyContratoAdminForm, self).__init__(*args, **kwargs)
+        contrato = kwargs['instance']
+        if not 'initial' in kwargs:
+            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=contrato.empresa.moradas, initial=kwargs['instance'].moradas)
+
+#para o contrato e isto
+#            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=Empresa.objects.all()[180:190], initial=kwargs['instance'].moradas, widget=forms.CheckboxSelectMultiple())
+
+    class Meta:
+        model = Contrato
+#        fields = ('numero', 'data_inicio', 'data_fim', 'empresa', 'moradas')
+
 class MyEmpresaAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MyEmpresaAdminForm, self).__init__(*args, **kwargs)
-        if not 'initial' in kwargs:
-            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=kwargs['instance'].moradas)
-        else:
-            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=Empresa.objects.all(), initial=kwargs['instance'].moradas, widget=forms.CheckboxSelectMultiple())
+#        if not 'initial' in kwargs:
+#            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=kwargs['instance'].moradas)
+#        else:
+#            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=Empresa.objects.all(), initial=kwargs['instance'].moradas, widget=forms.CheckboxSelectMultiple())
 
 #para o contrato e isto
 #            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=Empresa.objects.all()[180:190], initial=kwargs['instance'].moradas, widget=forms.CheckboxSelectMultiple())
@@ -65,6 +79,7 @@ class EmpresaAdmin(admin.ModelAdmin):
     filter_horizontal = ('moradas',)
 
 class ContratoAdmin(admin.ModelAdmin):
+    form = MyContratoAdminForm
     fieldsets = [
         (None,         {'fields': ['numero', 'data_inicio', 'data_fim', 'empresa', 'moradas']}),
     ]

@@ -65,13 +65,12 @@ class ServicoContratado(models.Model):
 class Pessoa(models.Model):
     empresa = models.ForeignKey(Empresa)
     nome = models.CharField(max_length=200)
-    data_nascimento = models.DateField('Data Nascimento', null=True)
-    telefone = models.CharField('Telefone', max_length=12)
-    fax = models.CharField('Fax', max_length=12)
-    movel = models.CharField('Telemovel', max_length=12)
+    data_nascimento = models.DateField('Data Nascimento', blank=True)
+    telefone = models.CharField('Telefone', max_length=14)
+    fax = models.CharField('Fax', max_length=14)
+    movel = models.CharField('Telemovel', max_length=14)
     email = models.EmailField('Email', null=True)
     contacto_principal = models.BooleanField('Contacto principal da empresa')
-
 
     def __unicode__(self):
         return unicode(self.nome)
@@ -84,7 +83,7 @@ class Transportadora(models.Model):
 
 class Recolha(models.Model):
     data_pedido_recolha = models.DateTimeField('Data Recolha Planeada')
-    recolha_efectuada = models.DateTimeField('Data Recolha Efectuada', null=True)
+    recolha_efectuada = models.DateTimeField('Data Recolha Efectuada', blank=True)
     acompanhamento_tecnico = models.BooleanField('Teve acompanhamento tecnico')
     transportadora = models.ForeignKey(Transportadora)
     empresa = models.ForeignKey(Empresa)
