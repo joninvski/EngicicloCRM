@@ -2,6 +2,17 @@ from crm.models import Empresa, Pessoa, ServicoContratado, Transportadora
 from crm.models import Recolha, Contrato, EmpresaMorada, Proposta, ObservacaoEmpresa
 from crm.models import Colaborador, TipoProposta, TipoServicoContratado, Vendedor
 from django.contrib import admin
+from django import forms
+
+class MyEmpresaAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(MyEmpresaAdminForm, self).__init__(*args, **kwargs)
+        if not 'initial' in kwargs:
+            self.fields['moradas'].queryset = kwargs['instance'].moradas
+
+    class Meta:
+        model = Empresa
+        fields = ('nome', 'n_entrada', 'n_facturacao', 'cliente', 'vendedores', 'data_inicio','comentario','cliente_berner', 'moradas')
 
 class EmpresaMoradaInline(admin.TabularInline):
     model = EmpresaMorada
@@ -34,11 +45,11 @@ class VendedorInline(admin.TabularInline):
     model = Vendedor
 
 class EmpresaAdmin(admin.ModelAdmin):
-    fieldsets = [
+    form = MyEmpresaAdminForm
+    fieldsets = [ 
         (None,         {'fields': ['nome', 'n_entrada', 'n_facturacao', 'cliente', 'vendedores']}),
         ('Mais dados', {'fields': ['data_inicio','comentario','cliente_berner', 'moradas'], 'classes': ['collapse']}),
     ]
-    filter_horizontal = ('moradas',)
     inlines = [ObservacaoEmpresaInline, ContratoInline, RecolhaInline, PessoaInline]
     list_display = ('n_entrada', 'nome','nif','data_inicio')
     list_per_page = 300
