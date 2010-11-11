@@ -43,6 +43,7 @@ class EmpresaAdmin(admin.ModelAdmin):
     list_per_page = 300
     search_fields = ['nome','nif']
     date_hierarchy = 'data_inicio'
+    save_on_top = True
 
 class ContratoAdmin(admin.ModelAdmin):
     fieldsets = [
