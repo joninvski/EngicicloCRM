@@ -8,15 +8,6 @@ class Vendedor(models.Model):
     def __unicode__(self):
         return unicode(self.nome)
 
-class Morada(models.Model):
-    rua_numero_andar = models.CharField(max_length=200)
-    codigo_postal = models.CharField(max_length=20)
-    cidade = models.CharField(max_length=20)
-    pais = models.CharField(max_length=20, default='Portugal')
-
-    def __unicode__(self):
-        return unicode(self.rua_numero_andar)
-
 class EmpresaMorada(models.Model):
     rua = models.CharField('Rua numero e andar', max_length=200)
     localidade = models.CharField(max_length=40)
@@ -64,7 +55,7 @@ class Contrato(models.Model):
 
 class ServicoContratado(models.Model):
     contrato = models.ForeignKey(Contrato)
-    morada = models.ManyToManyField(Morada, null='True')
+    morada = models.ManyToManyField(EmpresaMorada, null='True')
     valor_contratado = models.FloatField(max_length=200)
     tipo_servico_contratado = models.ForeignKey(TipoServicoContratado)
 

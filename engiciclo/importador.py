@@ -107,7 +107,7 @@ def main():
         vendedor = transformer.create_vendedor(c, empresa)
         pessoas = transformer.create_pessoas(c, empresa)
         moradas = transformer.create_moradas(c, empresa)
-        contrato = transformer.create_contrato(c, empresa)
+        contrato = transformer.create_contrato(c, moradas, empresa)
 
 if __name__ == '__main__':
     main()

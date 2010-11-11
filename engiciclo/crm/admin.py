@@ -1,4 +1,4 @@
-from crm.models import Empresa, Pessoa, Morada, ServicoContratado, Transportadora
+from crm.models import Empresa, Pessoa, ServicoContratado, Transportadora
 from crm.models import Recolha, Contrato, EmpresaMorada, Proposta, ObservacaoEmpresa
 from crm.models import Colaborador, TipoProposta, TipoServicoContratado, Vendedor
 from django.contrib import admin
@@ -35,8 +35,8 @@ class VendedorInline(admin.TabularInline):
 
 class EmpresaAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,         {'fields': ['nome', 'n_entrada', 'n_facturacao', 'cliente', 'vendedores', 'moradas']}),
-        ('Mais dados', {'fields': ['data_inicio','comentario','cliente_berner'], 'classes': ['collapse']}),
+        (None,         {'fields': ['nome', 'n_entrada', 'n_facturacao', 'cliente', 'vendedores']}),
+        ('Mais dados', {'fields': ['data_inicio','comentario','cliente_berner', 'moradas'], 'classes': ['collapse']}),
     ]
     filter_horizontal = ('moradas',)
     inlines = [ObservacaoEmpresaInline, ContratoInline, RecolhaInline, PessoaInline]

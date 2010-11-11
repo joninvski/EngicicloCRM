@@ -57,8 +57,11 @@ def create_moradas(cliente_csv, empresa):
     empresaMorada.concelho = cliente_csv.concelho
     empresaMorada.empresa = empresa
     empresaMorada.save()
+    empresa.moradas.add(empresaMorada)
 
-def create_contrato(cliente_csv, empresa):
+    return empresaMorada
+
+def create_contrato(cliente_csv, morada, empresa):
     if(cliente_csv.n_contrato):
         contrato = Contrato()
         contrato.numero = cliente_csv.n_contrato
@@ -67,3 +70,4 @@ def create_contrato(cliente_csv, empresa):
         contrato.data_fim = contrato.data_inicio + one_year
         contrato.empresa = empresa
         contrato.save()
+        contrato.moradas.add(morada)
