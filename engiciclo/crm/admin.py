@@ -4,7 +4,11 @@ from crm.models import Colaborador, TipoProposta, TipoServicoContratado, Vendedo
 from django.contrib import admin
 from django import forms
 from django.forms import ModelMultipleChoiceField
+from django.contrib.admin.widgets import AdminTextInputWidget
 
+import datetime
+
+ 
 class MyContratoAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MyContratoAdminForm, self).__init__(*args, **kwargs)
@@ -17,22 +21,25 @@ class MyContratoAdminForm(forms.ModelForm):
 
     class Meta:
         model = Contrato
-#        fields = ('numero', 'data_inicio', 'data_fim', 'empresa', 'moradas')
 
 class MyEmpresaAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MyEmpresaAdminForm, self).__init__(*args, **kwargs)
-#        if not 'initial' in kwargs:
-#            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=kwargs['instance'].moradas)
-#        else:
-#            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=Empresa.objects.all(), initial=kwargs['instance'].moradas, widget=forms.CheckboxSelectMultiple())
+#        if 'initial' in kwargs:
+        self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=kwargs['instance'].moradas)
+        self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=Empresa.objects.all(), initial=kwargs['instance'].moradas)
+#       else:
+#           self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=kwargs['instance'].moradas)
+        self.fields['rua'] = forms.CharField()
+        self.fields['local'] = forms.CharField()
+        pais = forms.CharField()
 
 #para o contrato e isto
 #            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=Empresa.objects.all()[180:190], initial=kwargs['instance'].moradas, widget=forms.CheckboxSelectMultiple())
 
     class Meta:
         model = Empresa
-        fields = ('nome', 'n_entrada', 'n_facturacao', 'cliente', 'vendedores', 'data_inicio','comentario','cliente_berner', 'moradas')
+        fields = ('nome', 'n_entrada', 'n_facturacao', 'cliente', 'vendedores', 'data_inicio','comentario','cliente_berner', 'moradas','rua','local')
 
 class EmpresaMoradaInline(admin.TabularInline):
     model = EmpresaMorada
@@ -67,7 +74,7 @@ class VendedorInline(admin.TabularInline):
 class EmpresaAdmin(admin.ModelAdmin):
     form = MyEmpresaAdminForm
     fieldsets = [ 
-        (None,         {'fields': ['nome', 'n_entrada', 'n_facturacao', 'cliente', 'vendedores']}),
+        (None,         {'fields': ['nome', 'n_entrada', 'n_facturacao', 'cliente', 'vendedores','rua','local']}),
         ('Mais dados', {'fields': ['data_inicio','comentario','cliente_berner', 'moradas'], 'classes': ['collapse']}),
     ]
     inlines = [ObservacaoEmpresaInline, ContratoInline, RecolhaInline, PessoaInline]
