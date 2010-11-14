@@ -48,6 +48,7 @@ class ComentarioInline(admin.TabularInline):
 class ContratoInline(admin.TabularInline):
     model = Contrato
     extra = 1
+    exclude = ['moradas']
 
 class RecolhaInline(admin.TabularInline):
     model = Recolha
