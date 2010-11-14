@@ -16,9 +16,6 @@ class MyContratoAdminForm(forms.ModelForm):
         if not 'initial' in kwargs:
             self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=contrato.empresa.moradas, initial=kwargs['instance'].moradas)
 
-#para o contrato e isto
-#            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=Empresa.objects.all()[180:190], initial=kwargs['instance'].moradas, widget=forms.CheckboxSelectMultiple())
-
     class Meta:
         model = Contrato
 

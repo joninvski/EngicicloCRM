@@ -26,11 +26,11 @@ class Empresa(models.Model):
     cliente = models.BooleanField('Cliente Actual')
 
     n_entrada = models.IntegerField('Numero de Entrada', null=True)
-    n_facturacao = models.IntegerField('Numero de facturacao', null=True)
-    comentario = models.TextField('Comentario Geral', max_length=1000)
+    n_facturacao = models.IntegerField('Numero de facturacao', null=True, blank=True)
+    comentario = models.TextField('Comentario Geral', max_length=1000, blank=True)
 
-    cliente_berner = models.CharField(max_length=50)
-    vendedores = models.ManyToManyField(Vendedor, null=True)
+    cliente_berner = models.CharField(max_length=50, blank=True)
+    vendedores = models.ManyToManyField(Vendedor, null=True, blank=True)
     moradas = models.ManyToManyField(EmpresaMorada)
 
     def __unicode__(self):
@@ -67,9 +67,9 @@ class Pessoa(models.Model):
     nome = models.CharField(max_length=200)
     data_nascimento = models.DateField('Data Nascimento', blank=True)
     telefone = models.CharField('Telefone', max_length=14)
-    fax = models.CharField('Fax', max_length=14)
-    movel = models.CharField('Telemovel', max_length=14)
-    email = models.EmailField('Email', null=True)
+    fax = models.CharField('Fax', max_length=14, blank=True)
+    movel = models.CharField('Telemovel', max_length=14, blank=True)
+    email = models.EmailField('Email', null=True, blank=True)
     contacto_principal = models.BooleanField('Contacto principal da empresa')
 
     def __unicode__(self):
