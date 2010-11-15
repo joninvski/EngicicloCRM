@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <table>
+    {% for recolha in recolha_list %}
+    <tr>
+        <td width="250px">{{ recolha.data_pedido_recolha }}</td> 
+        <td width="250px">{{ recolha.empresa }}</td> 
+        <td width="250px"><a href="...">mapa<ogit {{ }}</td> 
+    </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

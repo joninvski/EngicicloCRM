@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     # Example:
 #     (r'^engiciclo/', include('engiciclo.foo.urls')),
      (r'^empresas/$', 'crm.views.index'),
+     (r'^recolhas/$', 'crm.views.recolhas_list'),
+     (r'^recolhas/(?P<empresa_id>\d+)/$', 'crm.views.recolhas_single'),
      (r'^$', redirect_to, {'url': '/admin/crm'}),
      (r'^/$', redirect_to, {'url': '/admin/crm'}),
      (r'^crm/$', redirect_to, {'url': '/admin/crm'}),

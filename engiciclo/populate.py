@@ -8,8 +8,8 @@ import os
 import datetime
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-from crm.models import Empresa, TipoServicoContratado, ServicoContratado, Pessoa, Transportadora, Morada, Contrato, EmpresaMorada, Proposta, Recolha, ObservacaoEmpresa, Colaborador, TipoProposta
-import crm.models
+from crm.models import Empresa, TipoServicoContratado, ServicoContratado, Pessoa, Transportadora, Contrato, EmpresaMorada, Proposta, Recolha, ObservacaoEmpresa, Colaborador, TipoProposta
+mport crm.models
 
 os.system("python manage.py reset crm --noinput ")
 

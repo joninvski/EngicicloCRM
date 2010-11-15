@@ -73,7 +73,7 @@ class ServicoContratado(models.Model):
 class Pessoa(models.Model):
     empresa = models.ForeignKey(Empresa)
     nome = models.CharField(max_length=200)
-    data_nascimento = models.DateField('Data Nascimento', blank=True)
+    data_nascimento = models.DateField('Data Nascimento', blank=True, null=True)
     telefone = models.CharField('Telefone', max_length=14)
     fax = models.CharField('Fax', max_length=14, blank=True)
     movel = models.CharField('Telemovel', max_length=14, blank=True)
