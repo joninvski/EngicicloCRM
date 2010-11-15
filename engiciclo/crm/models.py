@@ -19,6 +19,14 @@ class EmpresaMorada(models.Model):
     def __unicode__(self):
         return unicode(self.rua) + ', ' + unicode(self.localidade)
 
+class CodigoLER(models.Model):
+    numero = models.IntegerField()
+    descricao = models.TextField('Descricao do codigo')
+    comentatio = models.TextField('Comentario ao codigo', blank=True)
+
+    def __unicode__(self):
+        return unicode(self.numero) + ': ' +  self.descricao
+
 class Empresa(models.Model):
     nome = models.CharField('Nome da Empresa', max_length=200)
     nif = models.IntegerField(null='True')
@@ -87,9 +95,10 @@ class Recolha(models.Model):
     acompanhamento_tecnico = models.BooleanField('Teve acompanhamento tecnico')
     transportadora = models.ForeignKey(Transportadora)
     empresa = models.ForeignKey(Empresa)
+    codigosLER = models.ManyToManyField(CodigoLER)
 
     def __unicode__(self):
-        return unicode(self.data_pedido_recolha)
+        return unicode(self.data_pedido_recolha) + " " + unicode(self.empresa) + " " + unicode(self.codigosLER) + " " + unicode(self.transportadora)
 
 class Colaborador(models.Model):
     nome =  models.CharField('Colaborador',max_length=140)

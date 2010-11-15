@@ -1,6 +1,6 @@
 from crm.models import Empresa, Pessoa, ServicoContratado, Transportadora
 from crm.models import Recolha, Contrato, EmpresaMorada, Proposta, ObservacaoEmpresa
-from crm.models import Colaborador, TipoProposta, TipoServicoContratado, Vendedor
+from crm.models import Colaborador, TipoProposta, TipoServicoContratado, Vendedor, CodigoLER
 from django.contrib import admin
 from django import forms
 from django.forms import ModelMultipleChoiceField
@@ -12,19 +12,14 @@ import datetime
 class MyContratoAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MyContratoAdminForm, self).__init__(*args, **kwargs)
-        contrato = kwargs['instance']
-        if not 'initial' in kwargs:
-            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=contrato.empresa.moradas, initial=kwargs['instance'].moradas)
+        if 'instance' in kwargs:
+            contrato = kwargs['instance']
+            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=contrato.empresa.moradas, initial=kwargs['instance'].moradas,  widget=forms.CheckboxSelectMultiple())
+        else:
+            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=EmpresaMorada.objects.all())
 
     class Meta:
         model = Contrato
-
-class MultipleSelectWithPop(forms.SelectMultiple):
-    def render(self, name, *args, **kwargs):
-        html = super(MultipleSelectWithPop, self).render(name, *args, **kwargs)
-        from django.template.loader import render_to_string
-        popupplus = render_to_string("form/popupplus.html", {'field': 'empresamorada'})
-        return html+popupplus
 
 class MyEmpresaAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -87,6 +82,8 @@ class ContratoAdmin(admin.ModelAdmin):
     list_display = ('numero','data_inicio', 'data_fim', 'empresa')
     list_filter = ('empresa', )
 
+
+
 class ObservacaoEmpresaAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,         {'fields': ['texto']}),
@@ -103,10 +100,10 @@ class PessoaAdmin(admin.ModelAdmin):
 
 class RecolhaAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,         {'fields': ['data_pedido_recolha', 'recolha_efectuada', 'acompanhamento_tecnico', 'transportadora', 'empresa']}),
+        (None,         {'fields': ['data_pedido_recolha', 'codigosLER', 'recolha_efectuada', 'acompanhamento_tecnico', 'transportadora', 'empresa']}),
     ]
     list_filter = ('data_pedido_recolha', 'recolha_efectuada', 'acompanhamento_tecnico', 'transportadora', 'empresa')
-    list_display = ('data_pedido_recolha', 'recolha_efectuada', 'acompanhamento_tecnico', 'transportadora', 'empresa')
+    list_display = ('data_pedido_recolha', 'recolha_efectuada',  'transportadora', 'empresa')
 
 class PropostaAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -130,6 +127,7 @@ admin.site.register(ObservacaoEmpresa, ObservacaoEmpresaAdmin)
 admin.site.register(Colaborador)
 admin.site.register(Recolha, RecolhaAdmin)
 admin.site.register(EmpresaMorada)
+admin.site.register(CodigoLER)
 #admin.site.register(Pessoa, PessoaAdmin)
 admin.site.register(TipoProposta, TipoPropostaAdmin)
 admin.site.register(ServicoContratado)
