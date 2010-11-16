@@ -18,5 +18,5 @@ def recolhas_list(request):
     return render_to_response('empresa/recolha_list.html', {'recolha_list': recolha_list})
 
 def recolhas_single(request, empresa_id):
-    recolha = Recolha.objects.filter(id=empresa_id)
-    return render_to_response('empresa/recolha.html', {'recolha_list': recolha_list})
+    recolha = Recolha.objects.filter(id=empresa_id)[0]
+    return render_to_response('empresa/recolha.html', {'recolha': recolha, 'moradas': recolha.moradas})

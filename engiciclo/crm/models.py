@@ -96,6 +96,7 @@ class Recolha(models.Model):
     transportadora = models.ForeignKey(Transportadora)
     empresa = models.ForeignKey(Empresa)
     codigosLER = models.ManyToManyField(CodigoLER)
+    moradas = models.ManyToManyField(EmpresaMorada)
 
     def __unicode__(self):
         return unicode(self.data_pedido_recolha) + " " + unicode(self.empresa) + " " + unicode(self.codigosLER) + " " + unicode(self.transportadora)

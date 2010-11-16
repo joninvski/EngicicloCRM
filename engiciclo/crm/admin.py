@@ -100,10 +100,11 @@ class PessoaAdmin(admin.ModelAdmin):
 
 class RecolhaAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,         {'fields': ['data_pedido_recolha', 'codigosLER', 'recolha_efectuada', 'acompanhamento_tecnico', 'transportadora', 'empresa']}),
+        (None,         {'fields': ['data_pedido_recolha', 'codigosLER', 'recolha_efectuada', 'acompanhamento_tecnico', 'transportadora', 'empresa', 'moradas']}),
     ]
     list_filter = ('data_pedido_recolha', 'recolha_efectuada', 'acompanhamento_tecnico', 'transportadora', 'empresa')
     list_display = ('data_pedido_recolha', 'recolha_efectuada',  'transportadora', 'empresa')
+    filter_horizontal = ('moradas',)
 
 class PropostaAdmin(admin.ModelAdmin):
     fieldsets = [
