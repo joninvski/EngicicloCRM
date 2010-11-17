@@ -136,7 +136,7 @@ class RecolhaAdmin(ButtonableModelAdmin):
     def show_map(self, obj, recolha):
         from django.shortcuts import render_to_response
         return render_to_response('empresa/recolha.html', {'recolha':recolha})
-    show_map.short_description='Example button'
+    show_map.short_description='Show map'
 
     buttons = [ show_map ]
 
