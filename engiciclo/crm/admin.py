@@ -9,6 +9,34 @@ from django.db import models
 
 import datetime
 
+class ButtonableModelAdmin(admin.ModelAdmin):
+    buttons=()
+
+    def change_view(self, request, object_id, extra_context={}): 
+        extra_context['buttons']=self.buttons 
+        return super(ButtonableModelAdmin, self).change_view(request, object_id, extra_context)
+
+    def button_view_dispatcher(self, request, object_id, command): 
+        obj = self.model._default_manager.get(pk=object_id) 
+        return getattr(self, command)(request, obj)  \
+                or HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+    def get_urls(self):
+
+        from django.conf.urls.defaults import patterns, url
+        from django.utils.functional import update_wrapper
+
+        def wrap(view):
+            def wrapper(*args, **kwargs):
+                return self.admin_site.admin_view(view)(*args, **kwargs)
+            return update_wrapper(wrapper, view)
+
+        info = self.model._meta.app_label, self.model._meta.module_name
+
+        return patterns('',
+                        *(url(r'^(\d+)/(%s)/$' % but.func_name, wrap(self.button_view_dispatcher)) for but in self.buttons)
+                       ) + super(ButtonableModelAdmin, self).get_urls()
+
 class MyContratoAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MyContratoAdminForm, self).__init__(*args, **kwargs)
@@ -83,7 +111,6 @@ class ContratoAdmin(admin.ModelAdmin):
     list_filter = ('empresa', )
 
 
-
 class ObservacaoEmpresaAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,         {'fields': ['texto']}),
@@ -98,13 +125,20 @@ class PessoaAdmin(admin.ModelAdmin):
     ]
     list_filter = ('empresa',)
 
-class RecolhaAdmin(admin.ModelAdmin):
+class RecolhaAdmin(ButtonableModelAdmin):
     fieldsets = [
         (None,         {'fields': ['data_pedido_recolha', 'codigosLER', 'recolha_efectuada', 'acompanhamento_tecnico', 'transportadora', 'empresa', 'moradas']}),
     ]
     list_filter = ('data_pedido_recolha', 'recolha_efectuada', 'acompanhamento_tecnico', 'transportadora', 'empresa')
     list_display = ('data_pedido_recolha', 'recolha_efectuada',  'transportadora', 'empresa')
     filter_horizontal = ('moradas',)
+
+    def show_map(self, obj, recolha):
+        from django.shortcuts import render_to_response
+        return render_to_response('empresa/recolha.html', {'recolha':recolha})
+    show_map.short_description='Example button'
+
+    buttons = [ show_map ]
 
 class PropostaAdmin(admin.ModelAdmin):
     fieldsets = [
