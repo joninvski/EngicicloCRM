@@ -1,0 +1,145 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% load adminmedia %}{% admin_media_prefix %}css/dashboard.css" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div id="content-main">
+
+    <div class="module"> 
+        <table summary="Models available in the Crm application."> 
+            <caption><a href="" class="section">Entidades Principais</a></caption> 
+            <tr> 
+                <th scope="row"><a href="empresa/">Empresas</a></th> 
+                <td><a href="empresa/add/" class="addlink">Add</a></td> 
+                <td><a href="empresa/" class="changelink">Change</a></td> 
+            </tr> 
+
+            <tr> 
+                <th scope="row"><a href="proposta/">Propostas</a></th> 
+                <td><a href="proposta/add/" class="addlink">Add</a></td> 
+                <td><a href="proposta/" class="changelink">Change</a></td> 
+            </tr> 
+
+            <tr> 
+                <th scope="row"><a href="contrato/">Contratos</a></th> 
+                <td><a href="contrato/add/" class="addlink">Add</a></td> 
+                <td><a href="contrato/" class="changelink">Change</a></td> 
+            </tr> 
+
+            <tr> 
+                <th scope="row"><a href="recolha/">Recolhas</a></th> 
+                <td><a href="recolha/add/" class="addlink">Add</a></td> 
+                <td><a href="recolha/" class="changelink">Change</a></td> 
+            </tr> 
+
+            <tr> 
+                <th scope="row"><a href="servicocontratado/">Servicos contratados</a></th> 
+                <td><a href="servicocontratado/add/" class="addlink">Add</a></td> 
+                <td><a href="servicocontratado/" class="changelink">Change</a></td> 
+            </tr> 
+
+            <tr> 
+                <th scope="row"><a href="servicocontratado/">Alarmes</a></th> 
+                <td><a href="alarme/add/" class="addlink">Add</a></td> 
+                <td><a href="alarme/" class="changelink">Change</a></td> 
+            </tr> 
+
+        </table> 
+        <p/>
+        <p/>
+        <table summary="Entidades secundarias"> 
+            <caption><a href="" class="section">Entidades Secundarias</a></caption> 
+            <tr> 
+                <th scope="row"><a href="codigoler/">Codigo lers</a></th> 
+                <td><a href="codigoler/add/" class="addlink">Add</a></td> 
+                <td><a href="codigoler/" class="changelink">Change</a></td> 
+            </tr> 
+
+            <tr> 
+                <th scope="row"><a href="colaborador/">Colaboradores</a></th> 
+                <td><a href="colaborador/add/" class="addlink">Add</a></td> 
+                <td><a href="colaborador/" class="changelink">Change</a></td> 
+            </tr> 
+
+            <tr> 
+                <th scope="row"><a href="observacaoempresa/">Observacoes das empresas</a></th> 
+                <td><a href="observacaoempresa/add/" class="addlink">Add</a></td> 
+                <td><a href="observacaoempresa/" class="changelink">Change</a></td> 
+            </tr> 
+
+            <tr> 
+                <th scope="row"><a href="empresamorada/">Moradas das Empresa</a></th> 
+                <td><a href="empresamorada/add/" class="addlink">Add</a></td> 
+                <td><a href="empresamorada/" class="changelink">Change</a></td> 
+            </tr> 
+
+
+            <tr> 
+                <th scope="row"><a href="tipoproposta/">Tipo de propostas</a></th> 
+                <td><a href="tipoproposta/add/" class="addlink">Add</a></td> 
+                <td><a href="tipoproposta/" class="changelink">Change</a></td> 
+            </tr> 
+
+            <tr> 
+                <th scope="row"><a href="tiposervicocontratado/">Tipo de servico contratados</a></th> 
+                <td><a href="tiposervicocontratado/add/" class="addlink">Add</a></td> 
+                <td><a href="tiposervicocontratado/" class="changelink">Change</a></td> 
+            </tr> 
+
+            <tr> 
+                <th scope="row"><a href="transportadora/">Transportadoras</a></th> 
+                <td><a href="transportadora/add/" class="addlink">Add</a></td> 
+                <td><a href="transportadora/" class="changelink">Change</a></td> 
+            </tr> 
+
+            <tr> 
+                <th scope="row"><a href="vendedor/">Vendedores</a></th> 
+                <td><a href="vendedor/add/" class="addlink">Add</a></td> 
+                <td><a href="vendedor/" class="changelink">Change</a></td> 
+            </tr> 
+
+        </table> 
+    </div> 
+</div> 
+Futuro botao para exportar tudo
+{% endblock %}
+
+
+{% block sidebar %}
+<div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2>{% trans 'Recent Actions' %}</h2>
+        <h3>{% trans 'My Actions' %}</h3>
+        {% load log %}
+        {% get_admin_log 10 as admin_log for_user user %}
+        {% if not admin_log %}
+        <p>{% trans 'None available' %}</p>
+        {% else %}
+        <ul class="actionlist">
+            {% for entry in admin_log %}
+            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
+            {% if entry.is_deletion %}
+            {{ entry.object_repr }}
+            {% else %}
+            <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+            {% endif %}
+            <br/>
+            {% if entry.content_type %}
+            <span class="mini quiet">{% filter capfirst %}{% trans entry.content_type.name %}{% endfilter %}</span>
+            {% else %}
+            <span class="mini quiet">{% trans 'Unknown content' %}</span>
+            {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
