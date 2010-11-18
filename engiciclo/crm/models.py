@@ -99,7 +99,7 @@ class Recolha(models.Model):
     moradas = models.ManyToManyField(EmpresaMorada)
 
     def __unicode__(self):
-        return unicode(self.data_pedido_recolha) + " " + unicode(self.empresa) + " " + unicode(self.codigosLER) + " " + unicode(self.transportadora)
+        return unicode(self.data_pedido_recolha) + " " + unicode(self.empresa) + " " + unicode(self.transportadora)
 
 class Colaborador(models.Model):
     nome =  models.CharField('Colaborador',max_length=140)
