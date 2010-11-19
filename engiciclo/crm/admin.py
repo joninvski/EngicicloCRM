@@ -1,6 +1,7 @@
 from crm.models import Empresa, Pessoa, ServicoContratado, Transportadora
 from crm.models import Recolha, Contrato, EmpresaMorada, Proposta, ObservacaoEmpresa
 from crm.models import Colaborador, TipoProposta, TipoServicoContratado, Vendedor, CodigoLER
+from crm.models import Alerta, EstadoAlerta, PedidoDeConsulta, TipoProposta, Sirapa
 from django.contrib import admin
 from django import forms
 from django.forms import ModelMultipleChoiceField
@@ -142,7 +143,7 @@ class RecolhaAdmin(ButtonableModelAdmin):
 
 class PropostaAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,         {'fields': ['n_proposta', 'n_facturacao', 'n_campanha', 'n_fontes', 'n_trabalhadores', 'data_abertura', 'data_entrega', 'empresa', 'contrato', 'moradas', 'responsavel', 'decisao', 'data_decisao', 'tipo_proposta']}),
+        (None,         {'fields': ['n_proposta', 'n_facturacao', 'n_campanha', 'n_fontes', 'n_trabalhadores', 'data_abertura', 'data_entrega', 'empresa', 'contrato', 'moradas', 'responsavel', 'decisao', 'data_decisao', 'tipo_proposta', 'pedido_de_consulta']}),
     ]
     list_display = ('n_proposta', 'empresa', 'n_campanha', 'n_fontes', 'n_trabalhadores','contrato','tipo_proposta')
     list_filter = ('empresa',  'moradas', 'contrato', 'decisao','tipo_proposta')
@@ -152,6 +153,9 @@ class TipoPropostaAdmin(admin.ModelAdmin):
         (None,         {'fields': ['tipo']}),
     ]
     list_display = ('tipo',)
+
+class PedidoDeConsultaAdmin(admin.ModelAdmin):
+    list_filter = ('colaboradores',)
 
 admin.site.register(Empresa, EmpresaAdmin)
 admin.site.register(Vendedor)
@@ -167,3 +171,7 @@ admin.site.register(CodigoLER)
 admin.site.register(TipoProposta, TipoPropostaAdmin)
 admin.site.register(ServicoContratado)
 admin.site.register(TipoServicoContratado)
+admin.site.register(Alerta)
+admin.site.register(EstadoAlerta)
+admin.site.register(PedidoDeConsulta, PedidoDeConsultaAdmin)
+admin.site.register(Sirapa)

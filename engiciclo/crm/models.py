@@ -89,6 +89,7 @@ class Transportadora(models.Model):
     def __unicode__(self):
         return unicode(self.nome)
 
+
 class Recolha(models.Model):
     data_pedido_recolha = models.DateTimeField('Data Recolha Planeada')
     recolha_efectuada = models.DateTimeField('Data Recolha Efectuada', blank=True)
@@ -138,6 +139,8 @@ class Proposta(models.Model):
 
     tipo_proposta = models.ForeignKey(TipoProposta)
 
+    pedido_de_consulta = models.ManyToManyField('Proposta')
+
     def __unicode__(self):
         return unicode(str(self.n_proposta) + ": " + str(self.empresa))
 
@@ -149,3 +152,38 @@ class ObservacaoEmpresa(models.Model):
 
     def __unicode__(self):
         return unicode(self.texto) + ': '  + unicode(self.texto)
+
+class Alerta(models.Model):
+    data_introducao = models.DateTimeField('Data de introducao')
+    data_alerta = models.DateTimeField('Data de aviso do alerta')
+    responsavel_resolucao = models.ManyToManyField(Colaborador, null=True, blank=True, related_name='responsavel_solucao')
+    colaborador = models.ManyToManyField(Colaborador)
+    data_resolucao = models.DateTimeField('Data de resolucao')
+    empresa = models.ForeignKey(Empresa)
+
+    def __unicode__(self):
+        return unicode(self.data_introducao) + " " + unicode(self.empresa)
+
+class EstadoAlerta(models.Model):
+    estado = models.CharField(max_length=25)
+    alerta = models.ForeignKey(Alerta)
+
+    def __unicode__(self):
+        return unicode(self.estado)
+
+class PedidoDeConsulta(models.Model):
+    data_introducao = models.DateTimeField('Data de introducao')
+    colaboradores = models.ManyToManyField(Colaborador)
+    proposta = models.ForeignKey(Proposta, blank=True, null=True)
+
+    def __unicode__(self):
+        return unicode(self.data_introducao) + ' ' + unicode(self.colaboradores)
+
+class Sirapa(models.Model):
+    data_introducao = models.DateTimeField('Data de introducao')
+    colaboradores = models.ManyToManyField(Colaborador)
+    id_sirapa = models.CharField(max_length=32)
+    senha = models.CharField(max_length=32)
+
+    def __unicode__(self):
+        return unicode(self.id_sirapa)
