@@ -1,5 +1,5 @@
 import pdb
-from crm.models import Vendedor, Pessoa, Empresa, EmpresaMorada, Contrato
+from crm.models import Vendedor, Pessoa, Empresa, Morada, Contrato
 import datetime
 
 def create_empresa(cliente_csv):
@@ -50,16 +50,16 @@ def create_pessoas(cliente_csv, empresa):
     return lista_pessoas 
 
 def create_moradas(cliente_csv, empresa):
-    empresaMorada = EmpresaMorada()
-    empresaMorada.rua = cliente_csv.instalacoes
-    empresaMorada.localidade =  cliente_csv.localidade
-    empresaMorada.cod_postal = cliente_csv.cod_postal
-    empresaMorada.concelho = cliente_csv.concelho
-    empresaMorada.empresa = empresa
-    empresaMorada.save()
-    empresa.moradas.add(empresaMorada)
+    morada = Morada()
+    morada.rua = cliente_csv.instalacoes
+    morada.localidade =  cliente_csv.localidade
+    morada.cod_postal = cliente_csv.cod_postal
+    morada.concelho = cliente_csv.concelho
+    morada.empresa = empresa
+    morada.save()
+    empresa.moradas.add(morada)
 
-    return empresaMorada
+    return morada
 
 def create_contrato(cliente_csv, morada, empresa):
     if(cliente_csv.n_contrato):

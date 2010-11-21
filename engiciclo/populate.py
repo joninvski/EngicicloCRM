@@ -8,7 +8,7 @@ import os
 import datetime
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-from crm.models import Empresa, TipoServicoContratado, ServicoContratado, Pessoa, Transportadora, Contrato, EmpresaMorada, Proposta, Recolha, ObservacaoEmpresa, Colaborador, TipoProposta
+from crm.models import Empresa, TipoServicoContratado, ServicoContratado, Pessoa, Transportadora, Contrato, Morada, Proposta, Recolha, ObservacaoEmpresa, Colaborador, TipoProposta
 mport crm.models
 
 os.system("python manage.py reset crm --noinput ")
@@ -113,7 +113,7 @@ talho_joao.save()
 ################################
 #Empresa Morada
 ################################
-empresa_morada_a = EmpresaMorada()
+empresa_morada_a = Morada()
 empresa_morada_a.rua_numero_andar = "Rua Carvalho n.3 11Esq"
 empresa_morada_a.codigo_postal = "2800"
 empresa_morada_a.cidade = "Lisboa"
@@ -121,7 +121,7 @@ empresa_morada_a.pais = "Portugal"
 empresa_morada_a.empresa = bosh
 empresa_morada_a.save()
 
-empresa_morada_b = EmpresaMorada()
+empresa_morada_b = Morada()
 empresa_morada_b.rua_numero_andar = "Rua Manel Jakim n.3 11Esq"
 empresa_morada_b.codigo_postal = "2100"
 empresa_morada_b.cidade = "Lisboa"
@@ -129,7 +129,7 @@ empresa_morada_b.pais = "Portugal"
 empresa_morada_b.empresa = talho_joao
 empresa_morada_b.save()
 
-empresa_morada_c = EmpresaMorada()
+empresa_morada_c = Morada()
 empresa_morada_c.rua_numero_andar = "Rua Pedro Esteve n.1 2Esq"
 empresa_morada_c.codigo_postal = "2110"
 empresa_morada_c.cidade = "Lisboa"

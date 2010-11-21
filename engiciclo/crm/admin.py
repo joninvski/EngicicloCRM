@@ -1,5 +1,5 @@
 from crm.models import Empresa, Pessoa, ServicoContratado, Transportadora
-from crm.models import Recolha, Contrato, EmpresaMorada, Proposta, ObservacaoEmpresa
+from crm.models import Recolha, Contrato, Morada, Proposta, ObservacaoEmpresa
 from crm.models import Colaborador, TipoProposta, TipoServicoContratado, Vendedor, CodigoLER
 from crm.models import Alerta, EstadoAlerta, PedidoDeConsulta, TipoProposta, Sirapa
 from django.contrib import admin
@@ -45,7 +45,7 @@ class MyContratoAdminForm(forms.ModelForm):
             contrato = kwargs['instance']
             self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=contrato.empresa.moradas, initial=kwargs['instance'].moradas,  widget=forms.CheckboxSelectMultiple())
         else:
-            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=EmpresaMorada.objects.all())
+            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=Morada.objects.all())
 
     class Meta:
         model = Contrato
@@ -58,8 +58,8 @@ class MyEmpresaAdminForm(forms.ModelForm):
         model = Empresa
         fields = ('nome', 'n_entrada', 'n_facturacao', 'cliente', 'vendedores', 'data_inicio','comentario','cliente_berner', 'moradas')
 
-class EmpresaMoradaInline(admin.TabularInline):
-    model = EmpresaMorada
+class MoradaInline(admin.TabularInline):
+    model = Morada
 
 class PessoaInline(admin.TabularInline):
     model = Pessoa
@@ -134,12 +134,12 @@ class RecolhaAdmin(ButtonableModelAdmin):
     list_display = ('data_pedido_recolha', 'recolha_efectuada',  'transportadora', 'empresa')
     filter_horizontal = ('moradas',)
 
-    def show_map(self, obj, recolha):
+    def show_map_recolha(self, obj, recolha):
         from django.shortcuts import render_to_response
         return render_to_response('empresa/recolha.html', {'recolha':recolha})
-    show_map.short_description='Show map'
+    show_map_recolha.short_description='Show map'
 
-    buttons = [ show_map ]
+    buttons = [ show_map_recolha ]
 
 class PropostaAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -147,6 +147,16 @@ class PropostaAdmin(admin.ModelAdmin):
     ]
     list_display = ('n_proposta', 'empresa', 'n_campanha', 'n_fontes', 'n_trabalhadores','contrato','tipo_proposta')
     list_filter = ('empresa',  'moradas', 'contrato', 'decisao','tipo_proposta')
+
+def show_map_moradas(modeladmin, request, queryset):
+    from django.shortcuts import render_to_response
+    return render_to_response('empresa/mostrar_moradas.html', {'moradas_list':queryset})
+show_map_moradas.short_description = "Mostrar moradas"
+
+class MoradaAdmin(admin.ModelAdmin):
+    list_filter = ('concelho', 'distrito', 'pais')
+    list_display = ('rua', 'localidade',  'codigo_postal', 'concelho', 'distrito')
+    actions = [show_map_moradas]
 
 class TipoPropostaAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -165,7 +175,7 @@ admin.site.register(Proposta, PropostaAdmin)
 admin.site.register(ObservacaoEmpresa, ObservacaoEmpresaAdmin)
 admin.site.register(Colaborador)
 admin.site.register(Recolha, RecolhaAdmin)
-admin.site.register(EmpresaMorada)
+admin.site.register(Morada, MoradaAdmin)
 admin.site.register(CodigoLER)
 #admin.site.register(Pessoa, PessoaAdmin)
 admin.site.register(TipoProposta, TipoPropostaAdmin)

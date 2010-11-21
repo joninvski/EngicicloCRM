@@ -8,7 +8,7 @@ class Vendedor(models.Model):
     def __unicode__(self):
         return unicode(self.nome)
 
-class EmpresaMorada(models.Model):
+class Morada(models.Model):
     rua = models.CharField('Rua numero e andar', max_length=200)
     localidade = models.CharField(max_length=40)
     codigo_postal = models.CharField(max_length=20)
@@ -39,7 +39,7 @@ class Empresa(models.Model):
 
     cliente_berner = models.CharField(max_length=50, blank=True)
     vendedores = models.ManyToManyField(Vendedor, null=True, blank=True)
-    moradas = models.ManyToManyField(EmpresaMorada)
+    moradas = models.ManyToManyField(Morada)
 
     def __unicode__(self):
         return unicode(self.nome)
@@ -56,14 +56,14 @@ class Contrato(models.Model):
     data_inicio = models.DateField('Data inicio do contrato', null=True)
     data_fim = models.DateField('Data fim do Contrato', null=True)
     empresa = models.ForeignKey('Empresa')
-    moradas = models.ManyToManyField(EmpresaMorada)
+    moradas = models.ManyToManyField(Morada)
 
     def __unicode__(self):
         return unicode(self.numero) + " " + unicode(self.empresa) + " " + unicode(self.data_inicio)
 
 class ServicoContratado(models.Model):
     contrato = models.ForeignKey(Contrato)
-    morada = models.ManyToManyField(EmpresaMorada, null='True')
+    morada = models.ManyToManyField(Morada, null='True')
     valor_contratado = models.FloatField(max_length=200)
     tipo_servico_contratado = models.ForeignKey(TipoServicoContratado)
 
@@ -97,7 +97,7 @@ class Recolha(models.Model):
     transportadora = models.ForeignKey(Transportadora)
     empresa = models.ForeignKey(Empresa)
     codigosLER = models.ManyToManyField(CodigoLER)
-    moradas = models.ManyToManyField(EmpresaMorada)
+    moradas = models.ManyToManyField(Morada)
 
     def __unicode__(self):
         return unicode(self.data_pedido_recolha) + " " + unicode(self.empresa) + " " + unicode(self.transportadora)
@@ -124,7 +124,7 @@ class Proposta(models.Model):
     data_entrega = models.DateTimeField('Data Entrega da Proposta')
     empresa = models.ForeignKey('Empresa')
     contrato = models.ForeignKey('Contrato')
-    moradas = models.ManyToManyField(EmpresaMorada)
+    moradas = models.ManyToManyField(Morada)
     responsavel = models.ManyToManyField(Colaborador)
     DECISOES_POSIVEIS = (
         ('S', 'Sim'),
