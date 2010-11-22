@@ -2,8 +2,28 @@ import pdb
 import csv
 import transformer
 
+from django.contrib.auth.models import User
+
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+
+############ ADMIN #############
+try:
+    u = User.objects.create(
+        username='root',
+        first_name='',
+        last_name='',
+        email='',
+        is_superuser=True,
+        is_staff=True,
+        is_active=True,
+    )
+    u.set_password('toor')
+    u.save()
+
+except Exception as e:
+    print str(e) + "Database user not saved"
+################################
 
 class EmpresaCSV():
     def __init__(self, n_cliente, n_factura, n_estabelecimento, n_contrato, S, V, C, R, cliente_berner, data_adesao, vendedor, valor_contratado, nipc, nome_empresa, pessoas, telefone, fax, movel, email, instalacoes, localidade, cod_postal, concelho, distrito, instalacoes_facturacao, localidade_facturacao, cod_postal_facturacao, concelho_facturacao, distrito_facturacao):

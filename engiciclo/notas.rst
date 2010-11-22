@@ -1,21 +1,21 @@
-* Nao mostrar n_entrada
-* Pesquisar empresa por numeros de facturacao
+* ---Nao mostrar n_entrada---
+* ---Pesquisar empresa por numeros de facturacao---
+
 * Empresa
-* Boleano a indicar - Data rescicao
-* Data rescicao nos contratos
+** Boleano a indicar - Data rescicao
+** ---Data rescicao nos contratos---
 
 * Inserir no importador tipos de servico
 
 * Moradas nao sao no javascript
 
-* Inserir tipo de contrato no contrato
+* Inserir tipo de contrato no contrato (R,S,V,T)
 
-* Data rescicao Cliente na empresa
 * Data entrada do registo
 
-* Dentro da empresaa nas recolhas moradas so da empresa
+* Dentro da empresa nas recolhas moradas so da empresa
 
-* Numero 
+* Numero
 
 * Na proposta criar campos dinamicos com pagina intermedia ou
   ** Mostrar campos certos conforme o que for
@@ -24,9 +24,9 @@
 
 * Acabar campos contrato (O colabor ja ta no excel)
 
-* Perigosidade no codigo LER e lista de LER
+* ---Perigosidade no codigo LER e lista de LER---
 
-* Recolha + uma data: data_combinada_recolha
+* Recolha ---+ uma data: data_combinada_recolha---
   ** Nome: Destino
   ** Substituir teve acompanhamento tecnico por colaborador
   ** Meter valores
@@ -56,7 +56,7 @@
  
 Tipos de alert tirar o alerta
 
-Pedido de consulta ter uma observacao de texto
+---Pedido de consulta ter uma observacao de texto---
 
 Sirapa
  ** Empresa 
@@ -71,6 +71,6 @@ Recebimento
 Contrato
 
 Moradas
-list_display = por localidade
-criar_accao = para desenhar ponto morada no mapa
+--- list_display = por localidade ---
+--- criar_accao = para desenhar ponto morada no mapa ---
 

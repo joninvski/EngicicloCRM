@@ -45,7 +45,7 @@ class MyContratoAdminForm(forms.ModelForm):
             contrato = kwargs['instance']
             self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=contrato.empresa.moradas, initial=kwargs['instance'].moradas,  widget=forms.CheckboxSelectMultiple())
         else:
-            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=Morada.objects.all())
+            self.fields['moradas'] = forms.ModelMultipleChoiceField(queryset=Morada.objects.none())
 
     class Meta:
         model = Contrato
@@ -53,6 +53,12 @@ class MyContratoAdminForm(forms.ModelForm):
 class MyEmpresaAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MyEmpresaAdminForm, self).__init__(*args, **kwargs)
+
+        print self.fields['moradas'].queryset
+        if 'instance' in kwargs:
+             self.fields['moradas'].queryset = kwargs['instance'].moradas
+        else:
+             self.fields['moradas'].queryset = Morada.objects.none()
 
     class Meta:
         model = Empresa
@@ -92,13 +98,13 @@ class VendedorInline(admin.TabularInline):
 class EmpresaAdmin(admin.ModelAdmin):
     form = MyEmpresaAdminForm
     fieldsets = [ 
-        (None,         {'fields': ['nome', 'n_entrada', 'n_facturacao', 'cliente', 'vendedores', 'moradas']}),
+        (None,         {'fields': ['nome', 'n_facturacao', 'cliente', 'vendedores', 'moradas']}),
         ('Mais dados', {'fields': ['data_inicio','comentario','cliente_berner', ], 'classes': ['collapse']}),
     ]
     inlines = [ObservacaoEmpresaInline, ContratoInline, RecolhaInline, PessoaInline]
-    list_display = ('n_entrada', 'nome','nif','data_inicio')
+    list_display = ('n_facturacao', 'nome','nif','data_inicio')
     list_per_page = 300
-    search_fields = ['nome','nif']
+    search_fields = ['nome','nif', 'n_facturacao']
     date_hierarchy = 'data_inicio'
     save_on_top = True
     filter_horizontal = ('moradas',)
@@ -106,10 +112,11 @@ class EmpresaAdmin(admin.ModelAdmin):
 class ContratoAdmin(admin.ModelAdmin):
     form = MyContratoAdminForm
     fieldsets = [
-        (None,         {'fields': ['numero', 'data_inicio', 'data_fim', 'empresa', 'moradas']}),
+        (None,         {'fields': ['numero', 'data_inicio', 'data_fim', 'data_rescisao', 'empresa', 'moradas']}),
     ]
-    list_display = ('numero','data_inicio', 'data_fim', 'empresa')
+    list_display = ('numero','data_inicio', 'data_fim', 'data_rescisao', 'empresa')
     list_filter = ('empresa', )
+    filter_horizontal = ('moradas',)
 
 
 class ObservacaoEmpresaAdmin(admin.ModelAdmin):
@@ -147,6 +154,7 @@ class PropostaAdmin(admin.ModelAdmin):
     ]
     list_display = ('n_proposta', 'empresa', 'n_campanha', 'n_fontes', 'n_trabalhadores','contrato','tipo_proposta')
     list_filter = ('empresa',  'moradas', 'contrato', 'decisao','tipo_proposta')
+    filter_horizontal = ('moradas',)
 
 def show_map_moradas(modeladmin, request, queryset):
     from django.shortcuts import render_to_response
@@ -166,6 +174,7 @@ class TipoPropostaAdmin(admin.ModelAdmin):
 
 class PedidoDeConsultaAdmin(admin.ModelAdmin):
     list_filter = ('colaboradores',)
+    list_display = ('data_introducao', 'empresa', 'comentario')
 
 admin.site.register(Empresa, EmpresaAdmin)
 admin.site.register(Vendedor)

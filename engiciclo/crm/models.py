@@ -23,6 +23,7 @@ class CodigoLER(models.Model):
     numero = models.IntegerField()
     descricao = models.TextField('Descricao do codigo')
     comentatio = models.TextField('Comentario ao codigo', blank=True)
+    perigoso = models.BooleanField('Residuo Perigoso', default=False)
 
     def __unicode__(self):
         return unicode(self.numero) + ': ' +  self.descricao
@@ -33,7 +34,7 @@ class Empresa(models.Model):
     data_inicio = models.DateField('Data Inicio do cliente', null=True)
     cliente = models.BooleanField('Cliente Actual')
 
-    n_entrada = models.IntegerField('Numero de Entrada', null=True)
+    n_entrada = models.IntegerField('Numero de Entrada', blank=True, null=True)
     n_facturacao = models.IntegerField('Numero de facturacao', null=True, blank=True)
     comentario = models.TextField('Comentario Geral', max_length=1000, blank=True)
 
@@ -55,6 +56,7 @@ class Contrato(models.Model):
     numero = models.CharField('Numero do contrato', max_length=20)
     data_inicio = models.DateField('Data inicio do contrato', null=True)
     data_fim = models.DateField('Data fim do Contrato', null=True)
+    data_rescisao = models.DateField('Data rescisao', null=True)
     empresa = models.ForeignKey('Empresa')
     moradas = models.ManyToManyField(Morada)
 
@@ -93,6 +95,7 @@ class Transportadora(models.Model):
 class Recolha(models.Model):
     data_pedido_recolha = models.DateTimeField('Data Recolha Planeada')
     recolha_efectuada = models.DateTimeField('Data Recolha Efectuada', blank=True)
+    data_combinada_recolha = models.DateTimeField('Data planeada da recolha', blank=True)
     acompanhamento_tecnico = models.BooleanField('Teve acompanhamento tecnico')
     transportadora = models.ForeignKey(Transportadora)
     empresa = models.ForeignKey(Empresa)
@@ -175,6 +178,8 @@ class PedidoDeConsulta(models.Model):
     data_introducao = models.DateTimeField('Data de introducao')
     colaboradores = models.ManyToManyField(Colaborador)
     proposta = models.ForeignKey(Proposta, blank=True, null=True)
+    empresa = models.ForeignKey(Empresa, blank=True, null=True)
+    comentario = models.TextField('Pedido de consulta')
 
     def __unicode__(self):
         return unicode(self.data_introducao) + ' ' + unicode(self.colaboradores)
