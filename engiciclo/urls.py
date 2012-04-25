@@ -7,22 +7,25 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Example:
-#     (r'^engiciclo/', include('engiciclo.foo.urls')),
-     (r'^empresas/$', 'crm.views.index'),
-     (r'^recolhas/$', 'crm.views.recolhas_list'),
-     (r'^recolhas/(?P<empresa_id>\d+)/$', 'crm.views.recolhas_single'),
-     (r'^$', redirect_to, {'url': '/admin/crm'}),
+     (r'^poster/$', 'crm.views.index'),
+#     (r'^recolhas/(?P<empresa_id>\d+)/$', 'crm.views.recolhas_single'),
+     (r'^$', redirect_to, {'url': '/ist/crm/poster/add'}),
      (r'^/$', redirect_to, {'url': '/admin/crm'}),
      (r'^crm/$', redirect_to, {'url': '/admin/crm'}),
-#     (r'^empresas/(?P<empresa_id>\d+)/$', 'crm.views.detail'),
+     (r'^crm/$', 'crm.views.confirmacao'),
 
+     (r'^ist/crm/poster[/]$', redirect_to, {'url': '/ist/crm/poster/add'}),
+     (r'^ist/confirmacao/$', 'crm.views.confirmacao'),
+
+     (r'^ist/$', redirect_to, {'url': '/ist/confirmacao/'}),
+     (r'^ist/crm/$', redirect_to, {'url': '/ist/confirmacao/'}),
 
     # Uncomment the admin/doc line below to enable admin documentation:
 #     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-     (r'^admin/', include(admin.site.urls)),
+     (r'^ist/', include(admin.site.urls)),
 
     #static
-    (r'^media2/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/ana/django/engiciclo/media'}),
+    (r'^media2/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/tmp/media'}),
 )
