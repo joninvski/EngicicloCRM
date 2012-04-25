@@ -1,20 +1,22 @@
+#!/usr/bin/python
+# -*- coding: latin-1 -*-
+
 from django.db import models
 import os
+import uuid
 
 # Create your models here.
-
-
 def get_image_path(instance, filename):
-        return os.path.join('photos', str(instance.id), filename)
+        return os.path.join('photos', str(uuid.uuid1()), filename)
 
 class Poster(models.Model):
-    nome_centro = models.CharField('Nome do Centro', max_length=120)
-    titulo = models.CharField('Titulo', max_length=120)
-    financiamento = models.CharField('Financiamento', max_length=120)
-    autores = models.TextField('Autores', blank=True)
-    descricao = models.TextField('Descricao', blank=True)
-    resumo = models.TextField('Resumo', blank=True)
-    data = models.DateTimeField('Data de introducao')
+    nome_centro = models.CharField('Nome do Centro', max_length=150)
+    titulo = models.CharField('Título', max_length=150)
+    financiamento = models.CharField('Financiamento', max_length=150)
+    autores = models.TextField('Autores')
+    descricao_da_foto = models.TextField('Descrição da foto',)
+    resumo = models.TextField('Resumo')
+#    data = models.DateTimeField('Data de introducao')
     poster = models.ImageField('Imagem do poster', upload_to=get_image_path, blank=False)
 
     def __unicode__(self):
